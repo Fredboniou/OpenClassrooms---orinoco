@@ -49,6 +49,8 @@ fetch('http://localhost:3000/api/teddies/')
       /* Contenu des balises HTML */
       productName.textContent = bear[i].name;
       seeProduct.textContent = 'voir le produit';
+
+      /* divProduct.innerHTML = `<div class="col-sm-6 col-md-6 col-lg-4 ftco-animate fadeInUp ftco-animated"><div class="product"><img class="img-fluid" src="${bear[i].imageUrl}" alt="ours en peluche fabriqué à la main"><div class="text py-3 px-3"><h3 class="productName">Norbert</h3><p class="bottom-area d-flex px-3"><a href="produit.html?id=undefined" class="add-to-cart text-center py-2 mr-1"><span class="see-product">voir le produit</span></a></p></div></div></div>`; */
     }
     } else  {
       console.error('retour du serveur : ', response.status);
