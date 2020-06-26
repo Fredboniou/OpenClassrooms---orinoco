@@ -9,16 +9,18 @@ fetch('http://localhost:3000/api/teddies/')
   .then(bear => {
     if(response.ok){
       console.log(bear);
-      for(let i = 0; i < bear.length; i++){
+      /*for(let i = 0; i < bear.length; i++){
         let productName = bear[i].name;
-        let productImage = bear[i].imageUrl;
+        let productImage = bear[i].imageUrl;*/
+
+      for (let bears of bear) {
       
       /* Création de la structure HTML */
       let divProduct = document.createElement('div'); /* div bootstrap */
       let product = document.createElement('div'); /* div contenant le global de chaque teddy */
-      productImage = document.createElement('img'); /* (image) */
+      let productImage = document.createElement('img'); /* (image) */
       let productElement = document.createElement('div'); /* (div contenant le nom et le lien) */
-      productName = document.createElement('h3'); /* (nom du teddy) */
+      let productName = document.createElement('h3'); /* (nom du teddy) */
       let productText = document.createElement('p'); /* (emplacement du lien vers page produit) */
       let productDetail = document.createElement('a'); /* (lien vers page produit) */
       let seeProduct = document.createElement('span'); /* (texte 'voir le produit') */
@@ -27,12 +29,12 @@ fetch('http://localhost:3000/api/teddies/')
       divProduct.setAttribute('class', 'col-sm-6 col-md-6 col-lg-4 ftco-animate fadeInUp ftco-animated'); /* div bootstrap */
       product.setAttribute('class', 'product'); /* div contenant le global de chaque teddy */
       productImage.setAttribute('class', 'img-fluid'); /* (image) */
-      productImage.setAttribute('src', bear[i].imageUrl); /* (image) */
+      productImage.setAttribute('src', bears.imageUrl); /* (image) */
       productImage.setAttribute('alt', 'ours en peluche fabriqué à la main'); /* (image) */
       productElement.setAttribute('class', 'text py-3 px-3'); /* (div contenant le nom et le lien) */
       productName.setAttribute('class', 'productName'); /* (nom du teddy) */
       productText.setAttribute('class', 'bottom-area d-flex px-3'); /* (emplacement du lien vers le produit) */
-      productDetail.setAttribute('href', 'produit.html?id=' + bear._id); /* (lien vers page produit) */
+      productDetail.setAttribute('href', 'produit.html?id=' + bears._id); /* (lien vers page produit) */
       productDetail.setAttribute('class', 'add-to-cart text-center py-2 mr-1'); /* (lien vers page produit) */
       seeProduct.setAttribute('class', 'see-product'); /* (texte 'voir le produit') */
       
@@ -47,7 +49,7 @@ fetch('http://localhost:3000/api/teddies/')
       productDetail.appendChild(seeProduct); /* (texte 'voir le produit) */
 
       /* Contenu des balises HTML */
-      productName.textContent = bear[i].name;
+      productName.textContent = bears.name;
       seeProduct.textContent = 'voir le produit';
 
       /* divProduct.innerHTML = `<div class="col-sm-6 col-md-6 col-lg-4 ftco-animate fadeInUp ftco-animated"><div class="product"><img class="img-fluid" src="${bear[i].imageUrl}" alt="ours en peluche fabriqué à la main"><div class="text py-3 px-3"><h3 class="productName">Norbert</h3><p class="bottom-area d-flex px-3"><a href="produit.html?id=undefined" class="add-to-cart text-center py-2 mr-1"><span class="see-product">voir le produit</span></a></p></div></div></div>`; */

@@ -62,24 +62,17 @@
 
     <section class="ftco-section">
     	<div class="container">
-    		<div class="row">
-    			<div class="col-lg-6 mb-5 ftco-animate">
-    				<img src="" class="img-fluid" alt="Colorlib Template">
+    		<div class="row" id="row">
+    			<div class="col-lg-6 mb-5 ftco-animate" id="divImage">
     			</div>
-    			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-    				<h3></h3>
-    				<p class="price"><span></span></p>
-    				<p></p>
+    			<div class="col-lg-6 product-details pl-md-5 ftco-animate" id="divDescription">
 					<div class="row mt-4">
 						<div class="col-md-6">
 							<div class="form-group d-flex">
 		              			<div class="select-wrap">
 	                  				<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                  				<select name="" id="" class="form-control">
-	                  					<option value=""></option>
-	                    				<option value=""></option>
-	                    				<option value=""></option>
-	                    				<option value=""></option>
+	                  				<select name="selection_couleur" id="choiceColors" class="form-control">
+										<option value="" selected>Choisissez votre couleur</option>
 	                  				</select>
 	                			</div>
 		            		</div>
@@ -161,6 +154,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+  <script src="public/produit.js"></script>
 
   <script>
 		$(document).ready(function(){
