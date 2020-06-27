@@ -1,3 +1,4 @@
+/* balises parentes */
 let divImage = document.getElementById('divImage');
 let divDescription = document.getElementById('divDescription');
 let choiceColors = document.getElementById('choiceColors');

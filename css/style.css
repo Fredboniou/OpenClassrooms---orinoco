@@ -8599,7 +8599,7 @@ h1, h2, h3, h4, h5,
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
-  border-radius: 30px;
+  border-radius: 30px !important;
   -webkit-box-shadow: 0px 24px 36px -11px rgba(0, 0, 0, 0.09);
   -moz-box-shadow: 0px 24px 36px -11px rgba(0, 0, 0, 0.09);
   box-shadow: 0px 24px 36px -11px rgba(0, 0, 0, 0.09); }
@@ -8638,8 +8638,8 @@ h1, h2, h3, h4, h5,
         background: #ffa45c;
         color: #fff; }
   .btn.btn-black {
-    background: #000000;
-    border: 1px solid #000000;
+    background: #000000 !important;
+    border: 1px solid #000000 !important;
     color: #fff; }
     .btn.btn-black:hover {
       background: #ffa45c;
@@ -8653,6 +8653,9 @@ h1, h2, h3, h4, h5,
         border: 1px solid transparent;
         background: #000000;
         color: #fff; }
+  .btn.btn-black.py-3.px-5 {
+    padding-top: 8px !important;
+  }
 
 .img-2 {
   position: relative; }
