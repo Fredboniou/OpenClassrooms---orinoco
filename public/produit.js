@@ -53,5 +53,44 @@ fetch('http://localhost:3000/api/teddies/' + idBears)
         }
     ))
 
+/* Ajout au panier */
+/* On défini le panier et on le converti en objet JS ave JSON.parse */
+let panier = JSON.parse(localStorage.getItem('panier'));
+
+/* Affichage du nombre d'article en index */
+function cartIndex(){
+    let cart = document.getElementById('cart');
+    cart.textContent = panier.length;
+}
+
+/* on vérifie si l'objet de stockage que l'on souhaite créer existe déjà ou non */
+if (localStorage.getItem('panier')){
+    console.log(panier);
+}else{
+    console.log('initialisation du panier');
+    let initCart = [];
+    localStorage.setItem('panier', JSON.stringify(initCart)); /* On converti une valeur JS en chaîne JSON */
+}
+
+/* Ajout de l'article au panier */
+addProduct = () => {
+    let addToCart = document.getElementById('addToCart');
+    addToCart = () => {
+        let addProductToCart = {
+            name : bearData.name,
+            image : bearData.imageUrl,
+            color : bearData.colors[0],
+            price : bearData.price / 100 + ' €'
+        }
+        addToCart.addEventListener('click', () => {
+        panier.push(addProductToCart);
+        localStorage.setItem('panier', JSON.stringify(panier));
+        console.log('article ajouté');
+        alert('ajouté au panier');
+        })    
+    }
+}
+
+
 
     
