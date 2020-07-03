@@ -2,6 +2,7 @@
 let divImage = document.getElementById('divImage');
 let divDescription = document.getElementById('divDescription');
 let choiceColors = document.getElementById('choiceColors');
+let addToCart = document.getElementById('addToCart');
 
 /* obtention des paramètres URL */
 const urlParams = new URLSearchParams(window.location.search);
@@ -53,43 +54,46 @@ fetch('http://localhost:3000/api/teddies/' + idBears)
         }
     ))
 
-/* Ajout au panier */
-/* On défini le panier et on le converti en objet JS ave JSON.parse */
+//Ajout au panier
+//On défini le panier et on le converti en objet JS avec JSON.parse
 let panier = JSON.parse(localStorage.getItem('panier'));
 
-/* Affichage du nombre d'article en index */
+//Affichage du nombre d'articles en index
 function cartIndex(){
     let cart = document.getElementById('cart');
     cart.textContent = panier.length;
 }
 
-/* on vérifie si l'objet de stockage que l'on souhaite créer existe déjà ou non */
-if (localStorage.getItem('panier')){
+//On vérifie si l'objet de stockage que l'on veut créer existe déjà ou non
+if(localStorage.getItem('panier')){
     console.log(panier);
 }else{
-    console.log('initialisation du panier');
-    let initCart = [];
-    localStorage.setItem('panier', JSON.stringify(initCart)); /* On converti une valeur JS en chaîne JSON */
+    console.log('panier prêt !');
+    let cartInit = [];
+    localStorage.setItem('panier', JSON.stringify(cartInit));
 }
 
-/* Ajout de l'article au panier */
-addProduct = () => {
-    let addToCart = document.getElementById('addToCart');
-    addToCart = () => {
-        let addProductToCart = {
-            name : bearData.name,
-            image : bearData.imageUrl,
-            color : bearData.colors[0],
-            price : bearData.price / 100 + ' €'
-        }
-        addToCart.addEventListener('click', () => {
-        panier.push(addProductToCart);
-        localStorage.setItem('panier', JSON.stringify(panier));
-        console.log('article ajouté');
-        alert('ajouté au panier');
-        })    
+/*addCart = () => {
+    let buy = document.getElementById('addToCart');
+    buy.addEventListener('click', async function() {
+        const add = await 
     }
-}
+}*/
+
+//Ajout au panier
+addToCart.addEventListener('click', () => {
+    if(choiceColors.value == "" ){
+        alert('Veuillez choisir une couleur')
+        return false;
+    }else{
+    panier.push(idBears);
+    localStorage.setItem('panier', JSON.stringify(panier));
+    console.log('article ajouté au panier');
+    alert('Cet article vient d\'être ajouté à votre panier');
+    cartIndex();
+    }
+})
+
 
 
 
