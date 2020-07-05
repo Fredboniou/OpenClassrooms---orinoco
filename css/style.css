@@ -10049,3 +10049,18 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+#panierVide{
+  text-align: center;
+  font-size: 30px;
+  color: red;
+}
+
+.remove{
+  border: 0 !important;
+  padding: 0 20px !important;
+  font-size: 25px !important;
+  text-align: center !important;
+  color: grey !important;
+  border-radius: 10px !important;
+}

@@ -42,7 +42,7 @@
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><i class="icon-shopping_cart"></i>[<span id="cart"></span>]</a></li>
+	          <li class="nav-item cta cta-colored"><a href="panier.html" class="nav-link"><i class="icon-shopping_cart"></i>[<span id="cart"></span>]</a></li>
 
 	        </ul>
 	      </div>
@@ -65,9 +65,24 @@
 				<div class="row">
     			<div class="col-md-12 ftco-animate">
     				<div id="panier-recap">
-						<p id="panierVide">Votre panier est vide</p>
+						<table class="table">
+						    <thead class="thead-primary">
+						      <tr class="text-center">
+						        <th>&nbsp;</th>
+						        <th>Product</th>
+						        <th>Name / Color</th>
+						        <th>Price</th>
+						        <th>Quantity</th>
+						        <th>Total</th>
+						      </tr>
+						    </thead>
+						    <tbody id="body">
+								<p id="panierVide"></p>
+						    </tbody>
+						  </table>
 					  </div>
-    			</div>
+				</div>
+				</div>
     		</div>
     		<div class="row justify-content-center">
     			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
@@ -232,9 +247,8 @@
   <script src="js/jquery.animateNumber.min.js"></script>
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+  <script src="public/panier.js"></script>
 
   <script>
 		$(document).ready(function(){
