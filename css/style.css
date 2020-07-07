@@ -10064,3 +10064,8 @@ textarea.form-control {
   color: grey !important;
   border-radius: 10px !important;
 }
+
+.image-product{
+  width : 60px;
+  height : 60px;
+}

@@ -47,7 +47,7 @@ fetch('http://localhost:3000/api/teddies/' + idBears)
             for (let i = 0; i < bearData.colors.length; i++) {
                 let productColors = document.createElement('option')
                 let bearColors = bearData.colors[i];
-                productColors.setAttribute('value', bearColors ); 
+                productColors.setAttribute('value', bearColors); 
                 productColors.innerHTML = bearColors;
                 choiceColors.appendChild(productColors);
             }}    
@@ -63,6 +63,7 @@ function cartIndex(){
     let cart = document.getElementById('cart');
     cart.textContent = panier.length;
 }
+cartIndex();
 
 //On vérifie si l'objet de stockage que l'on veut créer existe déjà ou non
 if(localStorage.getItem('panier')){
@@ -73,7 +74,7 @@ if(localStorage.getItem('panier')){
     localStorage.setItem('panier', JSON.stringify(cartInit));
 }
 
-//Ajout au panier
+// et enfin on ajoute le produit au panier
 addToCart.addEventListener('click', () => {
     //choix de la couleur obligatoire
     if(choiceColors.value == "" ){
@@ -88,75 +89,8 @@ addToCart.addEventListener('click', () => {
     }
 })
 
-//balises parentes
-let body = document.getElementById('body');
-let panierVide = document.getElementById('panierVide');
 
-//panier
-      createCart = () => {
-        if (panier.length > 0){
-          panierVide.remove();
 
-          panier.forEach((bearData) => {
-            //création de la structure HTML
-            let productLine = document.createElement('tr');
-            let productRemove = document.createElement('td');
-            let spanRemove = document.createElement('span');
-            let picture = document.createElement('td');
-            let pictureSrc = document.createElement('img');
-            let nameColor = document.createElement('td');
-            let productName = document.createElement('h3');
-            let productColor = document.createElement('h3');
-            let productPrice = document.createElement('td');
-            let productQuantity = document.createElement('td');
-            let divQuantity = document.createElement('div');
-            let quantityChoice = document.createElement('input');
-            let totalLine = document.createElement('td');
-
-            //structure HTML
-            body.appendChild(productLine);
-            productLine.appendChild(productRemove);
-            productRemove.appendChild(spanRemove);
-            productLine.appendChild(picture);
-            picture.appendChild(pictureSrc);
-            productLine.appendChild(nameColor);
-            nameColor.appendChild(productName);
-            nameColor.appendChild(productColor);
-            productLine.appendChild(productPrice);
-            productLine.appendChild(productQuantity);
-            productQuantity.appendChild(divQuantity);
-            divQuantity.appendChild(quantityChoice);
-            productLine.appendChild(totalLine);
-
-            //ajout des attributs
-            productLine.setAttribute('class', 'text-center');
-            productRemove.setAttribute('class', 'product-remove');
-            spanRemove.setAttribute('class', 'ion-ion-close');
-            picture.setAttribute('class', 'image-product');
-            pictureSrc.setAttribute('src', bearData.imageUrl);
-            nameColor.setAttribute('class', 'product-name');
-            productName.setAttribute('class', 'productName');
-            productColor.setAttribute('class', 'productColor');
-            productPrice.setAttribute('class', 'productPrice');
-            productQuantity.setAttribute('class', 'quantity');
-            divQuantity.setAttribute('class', 'input-group mb-3');
-            quantityChoice.setAttribute('type', 'text');
-            quantityChoice.setAttribute('name', 'quantity');
-            quantityChoice.setAttribute('class', 'quantity form-control input-number');
-            quantityChoice.setAttribute('value', '1');
-            quantityChoice.setAttribute('min', '1');
-            quantityChoice.setAttribute('max', '100');
-            totalLine.setAttribute('class', 'total');
-
-            //contenu
-            productName.textContent = bearData.name;
-            productColor.textContent = bearData.color;
-            productPrice.textContent = bearData.price / 100 + ' €';
-            totalLine.textContent = productPrice * quantityChoice.value + ' €';
-
-        })
-    }
-}
     
 
 

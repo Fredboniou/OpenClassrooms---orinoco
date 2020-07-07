@@ -9,10 +9,6 @@ fetch('http://localhost:3000/api/teddies/')
   .then(bear => {
     if(response.ok){
       console.log(bear);
-      /*for(let i = 0; i < bear.length; i++){
-        let productName = bear[i].name;
-        let productImage = bear[i].imageUrl;*/
-
       for (let bears of bear) {
       
       /* Création de la structure HTML */
@@ -58,3 +54,13 @@ fetch('http://localhost:3000/api/teddies/')
       console.error('retour du serveur : ', response.status);
     }
   }))
+
+//On défini le panier et on le converti en objet JS avec JSON.parse
+let panier = JSON.parse(localStorage.getItem('panier'));
+
+//Affichage du nombre d'articles en index
+function cartIndex(){
+    let cart = document.getElementById('cart');
+    cart.textContent = panier.length;
+}
+cartIndex();
