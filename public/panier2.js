@@ -1,32 +1,35 @@
 //balises parentes
 let body = document.getElementById('body');
-let totalLine = 0;
+let totalLine = null;
+let products = [];
 let i = 0;
 
 
 //récuperation du panier
 let panier = JSON.parse(localStorage.getItem('panier'));
-console.log(panier);
 
 //info selon qu'il y ai quelque chose dans le panier ou non
 if(panier === null){
   let emptyCart = document.createElement('p');
-  emptyCart.innerHTML = 'Votre panier est vide';
+  emptyCart.innerHTML = 'Votre panier set vide';
   body.appendChild(emptyCart)
 }else{
   let fullCart = document.createElement('p');
   fullCart.innerHTML = 'Votre panier : ';
   body.appendChild(fullCart);
 }
-console.log(body);
 
-//récupération des données et création du panier
-for(let i = 0; i < panier.length; i++){
-fetch('http://localhost:3000/api/teddies/')
+/* obtention des paramètres URL */
+const urlParams = new URLSearchParams(window.location.search);
+let idBears = urlParams.get("id");
+
+fetch('http://localhost:3000/api/teddies/' + idBears )
     .then(response => response.json()
-    .then(function(productInCart) {
+    .then(function(products) {
         if(response.ok){
-            console.log(panier);
+            console.log(products);
+//Création du panier
+for(let i = 0; i < panier.length; i++){
   let productInCart = panier[i];
   let productLine = body.insertRow(-1);
   productLine.setAttribute("class", "text-center");
@@ -41,21 +44,21 @@ fetch('http://localhost:3000/api/teddies/')
   let picture = productLine.insertCell(1);
   picture.setAttribute("class", "image-product");
   let pictureSrc = document.createElement("img");
-  pictureSrc.src = productInCart.imageUrl;
+  pictureSrc.src = products.imageUrl.idBears;
   picture.appendChild(pictureSrc);
   
   let nameColor = productLine.insertCell(2);
   nameColor.setAttribute("class", "product-name");
   let productName = document.createElement("h3");
-  productName.innerHTML = productInCart.name;
+  productName.innerHTML = product.name;
   nameColor.appendChild(productName);
   let productColor = document.createElement("h3");
-  productColor.innerHTML = productInCart.color;
+  productColor.innerHTML = product.color;
   nameColor.appendChild(productColor);
 
   let productPrice = productLine.insertCell(3);
   productPrice.setAttribute("class", "price");
-  productPrice.innerHTML = productInCart.price / 100 + " €";
+  productPrice.innerHTML = product.price / 100 + " €";
 
   let productQuantity = productLine.insertCell(4);
   productQuantity.setAttribute("class", "quantity");
@@ -71,25 +74,32 @@ fetch('http://localhost:3000/api/teddies/')
 
   let totalLine = productLine.insertCell(5);
   totalLine.setAttribute("class", "total");
-  totalLine = (productInCart.price / 100) * quantityChoice.value;
+  totalLine = (product.price / 100) * quantityChoice.value;
 
-  console.log(productInCart);
+  console.log(panier);
 
 
-  
+  //Dans products, on envoie les id des produits qui sont dans le panier et on les stock
+  //dans le storage
+  products = [...products, product.id];
+  let productStored = localStorage.setItem("products", JSON.stringify(product));
+  console.log(product);
 
   //suppression d'un produit
   buttonRemove.addEventListener("click", () =>{
     $("#cell" + i).remove();
     alert("L'article à bien été supprimé");
-    panier.splice([i], 1);
     localStorage.setItem("panier", JSON.stringify(panier));
-    console.log(panier);
-    
-    
     cartIndex();
+    
+    //suppression du produit dans [products] 
+    products.splice([i], 1);
+    
+    //mise à jour du storage
+    productStored = localStorage.setItem("products", JSON.stringify(product));
   })
-        }}))}
+}
+        }}))
 
 //Affichage du nombre d'articles en index
 function cartIndex(){
@@ -97,8 +107,3 @@ function cartIndex(){
     cart.textContent = panier.length;
 }
 cartIndex();
-
-
-
-  
-     
