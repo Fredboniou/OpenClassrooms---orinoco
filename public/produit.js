@@ -88,21 +88,7 @@ if(localStorage.getItem('panier')){
     localStorage.setItem('panier', JSON.stringify(cartInit));
 }
 
-// et enfin on ajoute le produit au panier
-/*addToCart.addEventListener('click', () => {
-    //choix de la couleur obligatoire
-    if(choiceColors.value == "" ){
-        alert('Veuillez choisir une couleur')
-        return false;
-    }else{
-    panier.push(bearData);
-    localStorage.setItem('panier', JSON.stringify(panier));
-    console.log('article ajouté au panier');
-    alert('Cet article vient d\'être ajouté à votre panier');
-    cartIndex();
-    console.log(panier);
-    }
-})*/
+
 
 
 
