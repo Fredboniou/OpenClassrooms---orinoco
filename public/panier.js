@@ -11,11 +11,12 @@ let panier = JSON.parse(localStorage.getItem('panier'));
 console.log(panier);
 
 //info selon qu'il y ai quelque chose dans le panier ou non
-if(panier === null){
+if(panier.length == 0){
   let emptyCart = document.createElement('p');
   emptyCart.setAttribute("id", "info");
   emptyCart.innerHTML = 'Votre panier est vide';
   section.prepend(emptyCart)
+  document.getElementById("form_1").setAttribute("hidden","true");
 }else{
   let fullCart = document.createElement('p');
   fullCart.setAttribute("id", "info");
