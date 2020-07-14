@@ -9,6 +9,7 @@ const urlParams = new URLSearchParams(window.location.search);
 let idBears = urlParams.get("id");
 console.log(idBears);
 
+
 /* Récupération des données pour chaque produit */
 fetch('http://localhost:3000/api/teddies/' + idBears)
     .then(response => response.json()
@@ -46,7 +47,7 @@ fetch('http://localhost:3000/api/teddies/' + idBears)
 
             for (let i = 0; i < bearData.colors.length; i++) {
                 let productColors = document.createElement('option')
-                let bearColors = bearData.colors[i];
+                var bearColors = bearData.colors[i];
                 productColors.setAttribute('value', bearColors); 
                 productColors.innerHTML = bearColors;
                 choiceColors.appendChild(productColors);

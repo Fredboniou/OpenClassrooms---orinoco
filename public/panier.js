@@ -1,7 +1,8 @@
 //balises parentes
 let body = document.getElementById('body');
-let totalLine = 0;
+let totalProduct = 0;
 let i = 0;
+let quantityChoice = 0;
 
 
 //récuperation du panier
@@ -63,23 +64,32 @@ fetch('http://localhost:3000/api/teddies/')
   divQuantity.setAttribute("class", "input-group mb-3");
   productQuantity.appendChild(divQuantity);
   let quantityChoice = document.createElement("input");
-  quantityChoice.setAttribute("type", "text");
+  quantityChoice.setAttribute("type", "number");
   quantityChoice.setAttribute("name", "quantity");
   quantityChoice.setAttribute("class", "quantity form-control input-number");
-  quantityChoice.setAttribute("value", "1");
+  quantityChoice.setAttribute("placeholder", "1");
   quantityChoice.setAttribute("min", "1");
+  quantityChoice.setAttribute("max", "100");
+  quantityChoice.setAttribute("onkeyup", "calcul(totalLine)");
+  divQuantity.appendChild(quantityChoice);
 
+  
+
+  function calcul(totalLine){  
+  totalProduct = (parseInt(productInCart.price) * parseInt(quantityChoice.value)) / 100 + " €";
+  console.log (totalLine);
+  }
   let totalLine = productLine.insertCell(5);
   totalLine.setAttribute("class", "total");
-  totalLine = (productInCart.price / 100) * quantityChoice.value;
-
-  console.log(productInCart);
+  totalLine.innerHTML = totalProduct;
+  calcul(totalLine);
+  console.log(totalLine);
 
 
   
 
   //suppression d'un produit
-  buttonRemove.addEventListener("click", () =>{
+  buttonRemove.addEventListener("click", () => {
     $("#cell" + i).remove();
     alert("L'article à bien été supprimé");
     panier.splice([i], 1);
@@ -98,6 +108,79 @@ function cartIndex(){
 }
 cartIndex();
 
+//Validation formulaire
+  //Coloration du champ incorrect
+  function highlight(field, error){
+    if(error){
+      field.backgroundColor = "red";
+    }else{
+      field.backgroundColor = "";
+    }
+  }
+
+  //Vérification du nom, prénom et de la ville
+  function verifField(field){
+    let regex = /^[a-zA-Z\s-]$/;
+    //la regex accepte les caractères alphabétiques minuscules et majuscules , 
+    //les espaces et les tirets
+    if(!regex.test(field.value)){
+      highlight(field, true);
+      return false;
+    }else{
+      highlight(field, false);
+      return true;
+    }
+  }
+  document.getElementById("nom").onblur = verifField(this);
+  console.log();
+  document.getElementById("prenom").onblur = verifField(this);
+  document.getElementById("ville").onblur = verifField(this);
+
+  //Vérification de l'email
+  function verifMail(field){
+    let regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/;
+    if(!regex.test(field.value)){
+      highlight(field, true);
+      return false;
+    }else{
+      highlight(field, false);
+      return true;
+    }
+  }
+  document.getElementById("email").onblur = verifMail(this);
+
+  //Vérification de l'adresse
+  function verifAdress(field){
+    let regex = /^[0-9]* ?[a-zA-Z\s,\.]*$/;
+    //[0-9]* ? => ensemble quelconque de chiffres répété n'importe quel nombre de fois suivi ou non d'un espace
+    //[a-zA-Z ,\.]* => ensemble quelconque de lettres, espaces, virgules ou points 
+    if(!regex.test(field.value)){
+      highlight(field, true);
+      return false;
+    }else{
+      highlight(field, false);
+      return true;
+    }
+  }
+  document.getElementById("adresse").onblur = verifAdress(this);
+
+  //Tout vérifier avant envoi
+  function verifForm(f){
+    let nameOk = verifField(f.nom);
+    let firstnameOk = verifField(f.prenom);
+    let mailOk = verifMail(f.email);
+    let adressOk = verifAdress(f.adresse)
+    let cityOk = verifField(f.ville);
+
+    if(nameOk && firstnameOk && mailOk && adressOk && cityOk){
+      return true;
+    }else{
+      alert("Veuillez remplir tous les champs correctement");
+      return false;
+    }
+  }
+  document.getElementById("form_1").onsubmit = verifForm(this);
+  console.log();
 
 
   
