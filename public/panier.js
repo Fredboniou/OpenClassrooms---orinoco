@@ -112,9 +112,9 @@ cartIndex();
   //Coloration du champ incorrect
   function highlight(field, error){
     if(error){
-      field.backgroundColor = "red";
+      field.style.backgroundColor = "red";
     }else{
-      field.backgroundColor = "";
+      field.style.backgroundColor = "";
     }
   }
 
@@ -131,10 +131,10 @@ cartIndex();
       return true;
     }
   }
-  document.getElementById("nom").onblur = verifField(this);
+  document.getElementById("nom").onblur = verifField;
   console.log();
-  document.getElementById("prenom").onblur = verifField(this);
-  document.getElementById("ville").onblur = verifField(this);
+  document.getElementById("prenom").onblur = verifField;
+  document.getElementById("ville").onblur = verifField;
 
   //Vérification de l'email
   function verifMail(field){
@@ -147,7 +147,7 @@ cartIndex();
       return true;
     }
   }
-  document.getElementById("email").onblur = verifMail(this);
+  document.getElementById("email").onblur = verifMail;
 
   //Vérification de l'adresse
   function verifAdress(field){
@@ -162,7 +162,7 @@ cartIndex();
       return true;
     }
   }
-  document.getElementById("adresse").onblur = verifAdress(this);
+  document.getElementById("adresse").onblur = verifAdress;
 
   //Tout vérifier avant envoi
   function verifForm(f){
@@ -179,7 +179,7 @@ cartIndex();
       return false;
     }
   }
-  document.getElementById("form_1").onsubmit = verifForm(this);
+  document.getElementById("form_1").onsubmit = verifForm;
   console.log();
 
 
