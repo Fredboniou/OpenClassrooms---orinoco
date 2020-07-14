@@ -1,5 +1,6 @@
 //balises parentes
 let body = document.getElementById('body');
+let section = document.getElementById('info_panier');
 let totalProduct = 0;
 let i = 0;
 let quantityChoice = 0;
@@ -12,12 +13,14 @@ console.log(panier);
 //info selon qu'il y ai quelque chose dans le panier ou non
 if(panier === null){
   let emptyCart = document.createElement('p');
+  emptyCart.setAttribute("id", "info");
   emptyCart.innerHTML = 'Votre panier est vide';
-  body.appendChild(emptyCart)
+  section.prepend(emptyCart)
 }else{
   let fullCart = document.createElement('p');
+  fullCart.setAttribute("id", "info");
   fullCart.innerHTML = 'Votre panier : ';
-  body.appendChild(fullCart);
+  section.prepend(fullCart);
 }
 console.log(body);
 

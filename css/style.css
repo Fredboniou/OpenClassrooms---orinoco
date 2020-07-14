@@ -10050,12 +10050,6 @@ textarea.form-control {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
 
-#panierVide{
-  text-align: center;
-  font-size: 30px;
-  color: red;
-}
-
 .remove{
   border: 0 !important;
   padding: 0 20px !important;
@@ -10068,4 +10062,10 @@ textarea.form-control {
 .image-product{
   width : 60px;
   height : 60px;
+}
+
+#info{
+  text-align: center;
+  font-size: 25px;
+  color: black;
 }
