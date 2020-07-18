@@ -6,10 +6,14 @@ let i = 0;
 let quantityChoice = 0;
 
 
+
+
 //récuperation du panier
 let panier = JSON.parse(localStorage.getItem('panier'));
 console.log(panier);
-
+//récupération de l'id(pour un seul produit)
+//let product = panier[i].id;
+//console.log(product);
 //info selon qu'il y ai quelque chose dans le panier ou non
 if(panier.length == 0){
   let emptyCart = document.createElement('p');
@@ -23,7 +27,6 @@ if(panier.length == 0){
   fullCart.innerHTML = 'Votre panier : ';
   section.prepend(fullCart);
 }
-console.log(body);
 
 //récupération des données et création du panier
 for(let i = 0; i < panier.length; i++){
@@ -33,6 +36,7 @@ fetch('http://localhost:3000/api/teddies/')
         if(response.ok){
             console.log(panier);
   let productInCart = panier[i];
+  console.log(productInCart)
   let productLine = body.insertRow(-1);
   productLine.setAttribute("class", "text-center");
   productLine.setAttribute("id", "cell" + i);
@@ -46,7 +50,9 @@ fetch('http://localhost:3000/api/teddies/')
   let picture = productLine.insertCell(1);
   picture.setAttribute("class", "image-product");
   let pictureSrc = document.createElement("img");
-  pictureSrc.src = productInCart.imageUrl;
+  pictureSrc.setAttribute("width", "150");
+  pictureSrc.setAttribute("height", "150");
+  pictureSrc.src = productInCart.img;
   picture.appendChild(pictureSrc);
   
   let nameColor = productLine.insertCell(2);
@@ -71,26 +77,35 @@ fetch('http://localhost:3000/api/teddies/')
   quantityChoice.setAttribute("type", "number");
   quantityChoice.setAttribute("name", "quantity");
   quantityChoice.setAttribute("class", "quantity form-control input-number");
-  quantityChoice.setAttribute("placeholder", "1");
+  quantityChoice.setAttribute("id", "total")
+  quantityChoice.setAttribute("value", "1");
   quantityChoice.setAttribute("min", "1");
   quantityChoice.setAttribute("max", "100");
-  quantityChoice.setAttribute("onkeyup", "calcul(totalLine)");
+  //quantityChoice.setAttribute("onkeyup", "calcul(totalLine)");
   divQuantity.appendChild(quantityChoice);
-
+  console.log(quantityChoice.value)
   
-
-  function calcul(totalLine){  
-  totalProduct = (parseInt(productInCart.price) * parseInt(quantityChoice.value)) / 100 + " €";
-  console.log (totalLine);
+  /*function calcul(totalProduct){  
+  let totalLine = productInCart.price// * (quantityChoice.value) / 100 + " €";
   }
+  calcul(totalProduct);
+  console.log(totalProduct)
+  
   let totalLine = productLine.insertCell(5);
   totalLine.setAttribute("class", "total");
-  totalLine.innerHTML = totalProduct;
-  calcul(totalLine);
-  console.log(totalLine);
+  totalLine.innerHTML = (productInCart.price / 100) * quantityChoice.value;
+  //calcul(totalLine);
+  console.log(totalLine);*/
 
+  function calcul(){
+    alert(linePrice);
+    let linePrice = (producInCart.price / 100) * quantityChoice.value;
+    let totalLine = productLine.insertcell(5);
+    totalLine.setAttribute("id", "totalLine");
+    totalLine.innerHTML = linePrice + " €";
+  }
 
-  
+  document.getElementById("total").addEventListener("change", calcul);
 
   //suppression d'un produit
   buttonRemove.addEventListener("click", () => {
@@ -103,7 +118,7 @@ fetch('http://localhost:3000/api/teddies/')
     
     cartIndex();
   })
-        }}))}
+}}))}
 
 //Affichage du nombre d'articles en index
 function cartIndex(){
@@ -123,8 +138,9 @@ cartIndex();
   }
 
   //Vérification du nom, prénom et de la ville
-  function verifField(field){
-    let regex = /^[a-zA-Z\s-]$/;
+  function verifField(event){
+    let regex = /^[a-zA-Z\s-]$/; 
+    let field = document.getElementById(event.srcElement.id); 
     //la regex accepte les caractères alphabétiques minuscules et majuscules , 
     //les espaces et les tirets
     if(!regex.test(field.value)){
@@ -135,14 +151,14 @@ cartIndex();
       return true;
     }
   }
-  document.getElementById("nom").onblur = verifField;
-  console.log();
-  document.getElementById("prenom").onblur = verifField;
-  document.getElementById("ville").onblur = verifField;
+  document.getElementById("nom").addEventListener("blur", verifField) //= verifField(document.getElementById("nom"));
+  document.getElementById("prenom").addEventListener("blur", verifField);
+  document.getElementById("ville").addEventListener("blur", verifField);
 
   //Vérification de l'email
-  function verifMail(field){
+  function verifMail(event){
     let regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/;
+    let field = document.getElementById(event.srcElement.id);
     if(!regex.test(field.value)){
       highlight(field, true);
       return false;
@@ -151,11 +167,12 @@ cartIndex();
       return true;
     }
   }
-  document.getElementById("email").onblur = verifMail;
+  document.getElementById("email").addEventListener("blur", verifMail);
 
   //Vérification de l'adresse
-  function verifAdress(field){
+  function verifAdress(event){
     let regex = /^[0-9]* ?[a-zA-Z\s,\.]*$/;
+    let field = document.getElementById(event.srcElement.id);
     //[0-9]* ? => ensemble quelconque de chiffres répété n'importe quel nombre de fois suivi ou non d'un espace
     //[a-zA-Z ,\.]* => ensemble quelconque de lettres, espaces, virgules ou points 
     if(!regex.test(field.value)){
@@ -166,7 +183,7 @@ cartIndex();
       return true;
     }
   }
-  document.getElementById("adresse").onblur = verifAdress;
+  document.getElementById("adresse").addEventListener("blur", verifAdress);
 
   //Tout vérifier avant envoi
   function verifForm(f){
@@ -183,7 +200,7 @@ cartIndex();
       return false;
     }
   }
-  document.getElementById("form_1").onsubmit = verifForm;
+  document.getElementById("form_1").addEventListener("submit", verifForm);
   console.log();
 
 

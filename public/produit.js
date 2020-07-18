@@ -58,7 +58,8 @@ fetch('http://localhost:3000/api/teddies/' + idBears)
                     alert('Veuillez choisir une couleur')
                     return false;
                 }else{
-                panier.push(bearData);
+                panier.push({name : bearData.name, img : bearData.imageUrl, 
+                price : bearData.price, color : choiceColors.value});
                 localStorage.setItem('panier', JSON.stringify(panier));
                 console.log('article ajouté au panier');
                 alert('Cet article vient d\'être ajouté à votre panier');
