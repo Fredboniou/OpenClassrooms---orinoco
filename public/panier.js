@@ -97,16 +97,22 @@ fetch('http://localhost:3000/api/teddies/')
   //calcul(totalLine);
   console.log(totalLine);*/
 
+  let totalLine = productLine.insertcell(5);
+  totalLine.setAttribute("id", "totalLine");
+
   function calcul(){
     alert(linePrice);
-    let linePrice = (producInCart.price / 100) * quantityChoice.value;
-    let totalLine = productLine.insertcell(5);
-    totalLine.setAttribute("id", "totalLine");
+    let linePrice = (producInCart.price / 100) * quantityChoice.value;  
     totalLine.innerHTML = linePrice + " €";
   }
+  calcul();
 
-  document.getElementById("total").addEventListener("change", calcul);
-
+  let modifyQuantity = document.getElementById("total");
+  modifyQuantity.addEventListener("change", () => { 
+    alert("Vous avez modifié la quantité d'un article");
+    calcul();
+  })
+  
   //suppression d'un produit
   buttonRemove.addEventListener("click", () => {
     $("#cell" + i).remove();
