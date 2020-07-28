@@ -10064,8 +10064,26 @@ textarea.form-control {
   height : 60px;
 }
 
-#info{
+#infoEmpty{
   text-align: center;
   font-size: 25px;
+  color: black;
+}
+
+#infoFull{
+  text-align: center;
+  font-size: 25px;
+  color: black;
+}
+
+#yourOrder{
+  text-align: center;
+  font-weight: 900;
+  color : black;
+}
+
+#numberArticle{
+  text-align: center;
+  font-weight: 900;
   color: black;
 }
