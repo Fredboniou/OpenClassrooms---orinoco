@@ -8,7 +8,7 @@ let i = 0;
 let quantityChoice = 0;
 let panierShop = [];
 let linePrice;
-let totalPay = 0;
+let orderPrice = 0;
 let sum = 0;
 
 //récuperation du panier
@@ -126,8 +126,8 @@ for (let i = 0; i < panier.length; i++) {
 
           function totalOrder(){
             let totalorder = document.getElementById("totalOrder");
-            totalPay += linePrice;
-            totalorder.innerHTML = totalPay + " €";
+            orderPrice += linePrice;
+            totalorder.innerHTML = orderPrice + " €";
             totalorder.style.fontWeight = "bold";
             totalorder.style.textAlign = "center";
             totalorder.style.fontSize = "20px";
@@ -323,9 +323,9 @@ form.addEventListener("submit", () => {
   else {
     //Création de l'objet contact pour envoi formulaire
     contact = {
-      Name: name.value,
-      firstName: firstname.value,
-      email: mail.value,
+      name: Name.value,
+      firstName: Firstname.value,
+      email: Mail.value,
       address: Address.value,
       city: City.value
     }
@@ -342,13 +342,13 @@ form.addEventListener("submit", () => {
       .then(response => response.json())
       .then(function (order) {
         let confirm = {
-          completeName: contact.Name + " " + contact.firstName,
+          completeName: contact.name + " " + contact.firstName,
           price: orderPrice,
           orderId: order.orderId
         }
-        //Envoi de la commande au localStorage
-        let orderStorage = localStorage.setItem("order", JSON.stringify(confirm));
-
       })
+      //Envoi de la commande au localStorage
+      let orderStorage = localStorage.setItem("order", JSON.stringify(confirm));
+      window.location = "confirmation.html";
   }
 })
