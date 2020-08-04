@@ -39,7 +39,8 @@ cartInfo();
 
 //récupération des données et création du panier
 for (let i = 0; i < panier.length; i++) {
-  fetch("http://localhost:3000/api/teddies")
+  //let id = panier[i].id;
+  fetch("http://localhost:3000/api/teddies"/*+ id*/)
     .then(response => response.json()
       .then(function (productInCart) {
         if (response.ok) {
@@ -104,7 +105,7 @@ for (let i = 0; i < panier.length; i++) {
             totalOrder();
           })
 
-          //calcul(productInCart.price, quantityChoice.value, totalLine);
+          calcul(productInCart.price, quantityChoice.value, totalLine);
 
           function numberArticle() {
             let totalNumber = [];
@@ -127,7 +128,7 @@ for (let i = 0; i < panier.length; i++) {
             totalorder.style.textAlign = "center";
             totalorder.style.fontSize = "20px";
           }
-          calcul();
+          calcul(productInCart.price, quantityChoice.value, totalLine);
           totalOrder();
 
           //suppression d'un produit
@@ -139,6 +140,7 @@ for (let i = 0; i < panier.length; i++) {
             console.log(panier);
 
             cartInfo();
+            calcul(productInCart.price, quantityChoice.value, totalLine);
           })
         }
       }))

@@ -6,7 +6,8 @@ function cartIndex() {
     cart.textContent = panierShop.length;
 }
 
+//calcul du total d'un produit en fonction de la quantité
 function calcul(price, quantity, total) {
     linePrice = (price / 100) * quantity;
     total.innerHTML = linePrice + " €";
-  }
+}
