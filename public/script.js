@@ -58,16 +58,4 @@ fetch("http://localhost:3000/api/teddies/")
 let panier = JSON.parse(localStorage.getItem("panier"));
 
 //Affichage du nombre d'articles en index
-function cartIndex() {
-  let panierShop = [];
-
-  //On vérifie si l'objet de stockage que l'on veut créer existe déjà ou non
-  if (localStorage.getItem("panier")) {
-    panierShop = localStorage.getItem("panier");
-  } else {
-    localStorage.setItem("panier", JSON.stringify(panierShop));
-  }
-  let cart = document.getElementById("cart");
-  cart.textContent = panier.length;
-}
 cartIndex();

@@ -99,17 +99,12 @@ for (let i = 0; i < panier.length; i++) {
           let modifyQuantity = document.getElementById("total");
           modifyQuantity.addEventListener("change", () => {
             alert("Vous avez modifié la quantité d'un article");
-            calcul();
+            calcul(productInCart.price, quantityChoice.value, totalLine);
             numberArticle();
             totalOrder();
           })
 
-
-          function calcul() {
-            linePrice = (productInCart.price / 100) * quantityChoice.value;
-            totalLine.innerHTML = linePrice + " €";
-          }
-          calcul();
+          //calcul(productInCart.price, quantityChoice.value, totalLine);
 
           function numberArticle() {
             let totalNumber = [];
