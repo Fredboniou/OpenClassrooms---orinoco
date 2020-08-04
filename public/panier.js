@@ -1,6 +1,6 @@
 //balises parentes
-let body = document.getElementById('body');
-let section = document.getElementById('info_panier');
+let body = document.getElementById("body");
+let section = document.getElementById("info_panier");
 let tableOrder = document.getElementById("panier-recap");
 let totalCart = document.getElementById("totalCart");
 let totalProduct = 0;
@@ -8,11 +8,9 @@ let i = 0;
 let quantityChoice = 0;
 let panierShop = [];
 let linePrice;
-let orderPrice = 0;
-let sum = 0;
 
 //récuperation du panier
-let panier = JSON.parse(localStorage.getItem('panier'));
+let panier = JSON.parse(localStorage.getItem("panier"));
 console.log(panier);
 /*const urlParams = new URLSearchParams(window.location.search);
 let idBears = urlParams.get("panier[i].id");
@@ -22,17 +20,17 @@ cartIndex();
 
 //info selon qu'il y ai quelque chose dans le panier ou non
 function cartInfo() {
-  if (panier.length == 0 || panier.length == null) {
-    let emptyCart = document.createElement('p');
+  if (panier.length == 0 || panier.length == null){
+    let emptyCart = document.createElement("p");
     emptyCart.setAttribute("id", "infoEmpty");
-    emptyCart.innerHTML = 'Votre panier est vide';
+    emptyCart.innerHTML = "Votre panier est vide";
     section.prepend(emptyCart)
     document.getElementById("form_1").setAttribute("hidden", "true");
     totalCart.setAttribute("hidden", "true");
   } else {
-    let fullCart = document.createElement('p');
+    let fullCart = document.createElement("p");
     fullCart.setAttribute("id", "infoFull");
-    fullCart.innerHTML = 'Votre panier : ';
+    fullCart.innerHTML = "Votre panier : ";
     section.prepend(fullCart);
   }
 }
@@ -41,7 +39,7 @@ cartInfo();
 
 //récupération des données et création du panier
 for (let i = 0; i < panier.length; i++) {
-  fetch('http://localhost:3000/api/teddies')
+  fetch("http://localhost:3000/api/teddies")
     .then(response => response.json()
       .then(function (productInCart) {
         if (response.ok) {
@@ -56,6 +54,8 @@ for (let i = 0; i < panier.length; i++) {
           productRemove.setAttribute("class", "product-remove");
           let buttonRemove = document.createElement("button");
           buttonRemove.innerHTML = "X";
+          buttonRemove.style.width = "14px";
+          buttonRemove.style.height = "20px";
           productRemove.appendChild(buttonRemove);
 
           let picture = productLine.insertCell(1);
@@ -85,7 +85,7 @@ for (let i = 0; i < panier.length; i++) {
           divQuantity.setAttribute("class", "input-group mb-3");
           productQuantity.appendChild(divQuantity);
           let quantityChoice = document.createElement("input");
-          quantityChoice.setAttribute("type", "text");
+          quantityChoice.setAttribute("type", "number");
           quantityChoice.setAttribute("name", "quantity");
           quantityChoice.setAttribute("class", "quantity form-control input-number");
           quantityChoice.setAttribute("id", "total")
@@ -102,9 +102,10 @@ for (let i = 0; i < panier.length; i++) {
           modifyQuantity.addEventListener("change", () => {
             alert("Vous avez modifié la quantité d'un article");
             calcul();
+            numberArticle();
             totalOrder();
           })
-          
+
 
           function calcul() {
             linePrice = (productInCart.price / 100) * quantityChoice.value;
@@ -112,19 +113,20 @@ for (let i = 0; i < panier.length; i++) {
           }
           calcul();
 
-          function numberArticle(){
-            let totalNumber = 0;
+          function numberArticle() {
+            let totalNumber = [];
             let number = document.getElementById("number");
             totalNumber += quantityChoice.value;
-            number.innerHTML = panier.length;
+            number.innerHTML = totalNumber;
             number.style.fontWeight = "bold";
             number.style.fontSize = "20px";
             number.style.textAlign = "center";
-            number.style.color = "black"
+            number.style.color = "black";
           }
           numberArticle();
 
-          function totalOrder(){
+          function totalOrder() {
+            let orderPrice = [];
             let totalorder = document.getElementById("totalOrder");
             orderPrice += linePrice;
             totalorder.innerHTML = orderPrice + " €";
@@ -157,12 +159,10 @@ function cartIndex() {
   let cart = document.getElementById("cart");
   if (localStorage.getItem("panier")) {
     panierShop = localStorage.getItem("panier");
-  } else if (localStorage.getItem("panier") === null) {
+    cart.textContent = panier.length;
+  } else if (localStorage.getItem("panier") == null) {
     cart.textContent = 0;
-  } else {
-    localStorage.setItem("panier", JSON.stringify(panier));
-  }
-  cart.textContent = panier.length;
+  } 
 }
 cartIndex();
 
@@ -331,7 +331,7 @@ form.addEventListener("submit", () => {
     }
     orderToSend = { contact, products } //formulaire + produits commandés
 
-    //paramètre pour requête fetch avec methode POST
+    //paramètres pour requête fetch avec methode POST
     let fetchParams = {
       method: "POST", //plus sécurisée que GET
       body: JSON.stringify(orderToSend),//converti les données en chaine JSON
@@ -347,8 +347,8 @@ form.addEventListener("submit", () => {
           orderId: order.orderId
         }
       })
-      //Envoi de la commande au localStorage
-      let orderStorage = localStorage.setItem("order", JSON.stringify(confirm));
-      window.location = "confirmation.html";
+    //Envoi de la commande au localStorage
+    let orderStorage = localStorage.setItem("order", JSON.stringify(confirm));
+    window.location = "confirmation.html";
   }
 })
