@@ -16,7 +16,7 @@ console.log(panier);
 let idBears = urlParams.get("panier[i].id");
 console.log(idBears);*/
 
-cartIndex();
+
 
 //info selon qu'il y ai quelque chose dans le panier ou non
 function cartInfo() {
@@ -43,7 +43,6 @@ for (let i = 0; i < panier.length; i++) {
     .then(response => response.json()
       .then(function (productInCart) {
         if (response.ok) {
-          console.log(panier);
           let productInCart = panier[i];
           console.log(productInCart)
           let productLine = body.insertRow(-1);
@@ -93,7 +92,6 @@ for (let i = 0; i < panier.length; i++) {
           quantityChoice.setAttribute("min", "1");
           quantityChoice.setAttribute("max", "100");
           divQuantity.appendChild(quantityChoice);
-          console.log(quantityChoice.value)
 
           let totalLine = productLine.insertCell(5);
           totalLine.setAttribute("id", "totalLine");
@@ -145,26 +143,12 @@ for (let i = 0; i < panier.length; i++) {
             localStorage.setItem("panier", JSON.stringify(panier));
             console.log(panier);
 
-
-            cartIndex();
             cartInfo();
           })
         }
       }))
 }
 
-//Affichage du nombre d'articles en index
-function cartIndex() {
-
-  let cart = document.getElementById("cart");
-  if (localStorage.getItem("panier")) {
-    panierShop = localStorage.getItem("panier");
-    cart.textContent = panier.length;
-  } else if (localStorage.getItem("panier") == null) {
-    cart.textContent = 0;
-  } 
-}
-cartIndex();
 
 //Validation formulaire
 //Coloration du champ incorrect
