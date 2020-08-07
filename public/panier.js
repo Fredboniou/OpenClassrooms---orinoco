@@ -1,51 +1,38 @@
-//balises parentes
+//création des variables
 let body = document.getElementById("body");
 let section = document.getElementById("info_panier");
 let tableOrder = document.getElementById("panier-recap");
 let totalCart = document.getElementById("totalCart");
 let totalProduct = 0;
-let i = 0;
+let i;
 let quantityChoice = 0;
-let panierShop = [];
+//let panierShop = [];
 let linePrice;
+let orderPrice = [];
+let totalorder = document.getElementById("totalOrder");
+let totalNumber = [];
+let number = document.getElementById("number");
 
 //récuperation du panier
-let panier = JSON.parse(localStorage.getItem("panier"));
-console.log(panier);
-/*const urlParams = new URLSearchParams(window.location.search);
-let idBears = urlParams.get("panier[i].id");
-console.log(idBears);*/
-
-
+let panierShop = JSON.parse(localStorage.getItem("panier"));
+console.log(panierShop);
 
 //info selon qu'il y ai quelque chose dans le panier ou non
-function cartInfo() {
-  if (panier.length == 0 || panier.length == null){
-    let emptyCart = document.createElement("p");
-    emptyCart.setAttribute("id", "infoEmpty");
-    emptyCart.innerHTML = "Votre panier est vide";
-    section.prepend(emptyCart)
-    document.getElementById("form_1").setAttribute("hidden", "true");
-    totalCart.setAttribute("hidden", "true");
-  } else {
-    let fullCart = document.createElement("p");
-    fullCart.setAttribute("id", "infoFull");
-    fullCart.innerHTML = "Votre panier : ";
-    section.prepend(fullCart);
-  }
-}
 cartInfo();
 
-
 //récupération des données et création du panier
-for (let i = 0; i < panier.length; i++) {
-  //let id = panier[i].id;
-  fetch("http://localhost:3000/api/teddies"/*+ id*/)
+for (let i = 0; i < panierShop.length; i++) {
+  //const urlParams = new URLSearchParams(window.location.search);
+  //let id = urlParams.get(panierShop[i].id);
+  
+  let id = panierShop[i].id;
+  console.log(id)
+  fetch("http://localhost:3000/api/teddies/" /*, id*/ /*+ id*/)
     .then(response => response.json()
       .then(function (productInCart) {
         if (response.ok) {
-          let productInCart = panier[i];
-          console.log(productInCart)
+          let productInCart = panierShop[i];
+          console.log(productInCart.id)
           let productLine = body.insertRow(-1);
           productLine.setAttribute("class", "text-center");
           productLine.setAttribute("id", "cell" + i);
@@ -57,15 +44,16 @@ for (let i = 0; i < panier.length; i++) {
           buttonRemove.style.width = "14px";
           buttonRemove.style.height = "20px";
           productRemove.appendChild(buttonRemove);
-
+          
           let picture = productLine.insertCell(1);
           picture.setAttribute("class", "image-product");
           let pictureSrc = document.createElement("img");
           pictureSrc.setAttribute("width", "150");
           pictureSrc.setAttribute("height", "150");
-          pictureSrc.src = productInCart.img;
+          //pictureSrc.src = productInCart.img;
+          pictureSrc.src = id.imageUrl;
           picture.appendChild(pictureSrc);
-
+          
           let nameColor = productLine.insertCell(2);
           nameColor.setAttribute("class", "product-name");
           let productName = document.createElement("h3");
@@ -101,35 +89,13 @@ for (let i = 0; i < panier.length; i++) {
           modifyQuantity.addEventListener("change", () => {
             alert("Vous avez modifié la quantité d'un article");
             calcul(productInCart.price, quantityChoice.value, totalLine);
-            numberArticle();
-            totalOrder();
+            numberArticle(totalNumber, quantityChoice.value, number);
+            totalOrder(orderPrice, linePrice, totalorder);
           })
 
+          numberArticle(totalNumber, quantityChoice.value, number);
           calcul(productInCart.price, quantityChoice.value, totalLine);
-
-          function numberArticle() {
-            let totalNumber = [];
-            let number = document.getElementById("number");
-            totalNumber += quantityChoice.value;
-            number.innerHTML = totalNumber;
-            number.style.fontWeight = "bold";
-            number.style.fontSize = "20px";
-            number.style.textAlign = "center";
-            number.style.color = "black";
-          }
-          numberArticle();
-
-          function totalOrder() {
-            let orderPrice = [];
-            let totalorder = document.getElementById("totalOrder");
-            orderPrice += linePrice;
-            totalorder.innerHTML = orderPrice + " €";
-            totalorder.style.fontWeight = "bold";
-            totalorder.style.textAlign = "center";
-            totalorder.style.fontSize = "20px";
-          }
-          calcul(productInCart.price, quantityChoice.value, totalLine);
-          totalOrder();
+          totalOrder(orderPrice, linePrice, totalorder);
 
           //suppression d'un produit
           buttonRemove.addEventListener("click", () => {
@@ -140,30 +106,21 @@ for (let i = 0; i < panier.length; i++) {
             console.log(panier);
 
             cartInfo();
-            calcul(productInCart.price, quantityChoice.value, totalLine);
+            numberArticle(totalNumber, quantityChoice.value, number);
+            totalOrder(orderPrice, linePrice, totalorder);
           })
         }
       }))
 }
 
 
-//Validation formulaire
-//Coloration du champ incorrect
-function highlight(field, error) {
-  if (error) {
-    field.style.backgroundColor = "red";
-  } else {
-    field.style.backgroundColor = "";
-  }
-}
-
-//Validation formulaire
+//Validation formulaire avec coloration des champs incorrects
 
 //Création des regex
 let regex = /^[a-zA-Z\é\è\ê\ï\ë\ç\s\'-]+$/;
 //la regex accepte les caractères alphabétiques minuscules et majuscules , 
 //les espaces et les tirets
-let regexMail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/;
+let regexMail = /^([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4})$/;
 let regexAddress = /^[0-9]* ?[a-zA-Z\s,\.]*$/;
 //[a-zA-Z\s,\.]* => ensemble quelconque de lettres, espaces, virgules ou points 
 //[0-9]* ? => ensemble quelconque de chiffres répété n'importe quel nombre de fois suivi ou non d'un espace
@@ -175,84 +132,6 @@ let Mail;
 let Address;
 let City;
 
-//Coloration du champ incorrect
-function highlight(field, error) {
-  if (error) {
-    field.style.backgroundColor = "red";
-  } else {
-    field.style.backgroundColor = "";
-  }
-}
-
-//Vérification du nom
-function verifName(event) {
-  let field = document.getElementById(event.srcElement.id);
-  Name = regex.test(field.value);
-
-  if (!Name) {
-    highlight(field, true);
-    return false;
-  } else {
-    highlight(field, false);
-    return true;
-  }
-}
-
-//Vérification du prénom
-function verifFirstName(event) {
-  let field = document.getElementById(event.srcElement.id);
-  Firstname = regex.test(field.value);
-
-  if (!Firstname) {
-    highlight(field, true);
-    return false;
-  } else {
-    highlight(field, false);
-    return true;
-  }
-}
-
-//Vérification de l'email
-function verifMail(event) {
-  let field = document.getElementById(event.srcElement.id);
-  Mail = regexMail.test(field.value);
-
-  if (!Mail) {
-    highlight(field, true);
-    return false;
-  } else {
-    highlight(field, false);
-    return true;
-  }
-}
-
-//Vérification de l'adresse
-function verifAddress(event) {
-  let field = document.getElementById(event.srcElement.id);
-  Address = regexAddress.test(field.value);
-
-  if (!Address) {
-    highlight(field, true);
-    return false;
-  } else {
-    highlight(field, false);
-    return true;
-  }
-}
-
-//Vérification de la ville
-function verifCity(event) {
-  let field = document.getElementById(event.srcElement.id);
-  City = regex.test(field.value);
-
-  if (!City) {
-    highlight(field, true);
-    return false;
-  } else {
-    highlight(field, false);
-    return true;
-  }
-}
 //Variables qui seront utilisés pour appel des event
 let form = document.getElementById("form_1");
 
@@ -262,23 +141,6 @@ document.getElementById("prenom").addEventListener("blur", verifFirstName);
 document.getElementById("email").addEventListener("blur", verifMail);
 document.getElementById("adresse").addEventListener("blur", verifAddress);
 document.getElementById("ville").addEventListener("blur", verifCity);
-
-//Tout vérifier avant envoi
-/*function verifForm(event){
-  let nameOk = verifName();
-  let firstnameOk = verifFirstName();
-  let mailOk = verifMail();
-  let addressOk = verifAdress()
-  let cityOk = verifCity();
-
-  if(nameOk && firstnameOk && mailOk && adressOk && cityOk){
-    return true;
-  }else{
-    alert("Veuillez remplir tous les champs correctement");
-    return false;
-  }
-}
-document.getElementById("commander").addEventListener("click", verifForm);*/
 
 
 //Envoi du formulaire

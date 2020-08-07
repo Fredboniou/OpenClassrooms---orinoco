@@ -3,16 +3,11 @@ let divImage = document.getElementById("divImage");
 let divDescription = document.getElementById("divDescription");
 let choiceColors = document.getElementById("choiceColors");
 let addToCart = document.getElementById("addToCart");
-
+let panierShop = (localStorage.getItem("panier")) ? JSON.parse(localStorage.getItem("panier")) : [];;
 /* obtention des paramètres URL */
 const urlParams = new URLSearchParams(window.location.search);
 let idBears = urlParams.get("id");
 console.log(idBears);
-
-
-
-//On défini le panier et on le converti en objet JS avec JSON.parse
-let panier = JSON.parse(localStorage.getItem("panier"));
 
 cartIndex();
 
@@ -68,15 +63,16 @@ fetch("http://localhost:3000/api/teddies/" + idBears)
                         alert("Veuillez choisir une couleur")
                         return false;
                     } else {
-                        panier.push({
+                        /*panierShop.push({
                             name: bearData.name, img: bearData.imageUrl,
                             price: bearData.price, color: choiceColors.value
                         });
-                        localStorage.setItem("panier", JSON.stringify(panier));
-                        //panier.push({ id: idBears, colors: choiceColors.value })
-                        //localStorage.setItem("panier", JSON.stringify(panier));
+                        localStorage.setItem("panier", JSON.stringify(panierShop));*/
+                        panierShop.push({ id: idBears, colors: choiceColors.value })
+                        localStorage.setItem("panier", JSON.stringify(panierShop));
                         alert("Cet article vient d\'être ajouté à votre panier");
                         cartIndex();
+                        console.log(panierShop)
                     }
                 })
             }
