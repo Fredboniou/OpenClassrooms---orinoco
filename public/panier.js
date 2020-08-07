@@ -50,8 +50,8 @@ for (let i = 0; i < panierShop.length; i++) {
           let pictureSrc = document.createElement("img");
           pictureSrc.setAttribute("width", "150");
           pictureSrc.setAttribute("height", "150");
-          //pictureSrc.src = productInCart.img;
-          pictureSrc.src = id.imageUrl;
+          pictureSrc.src = productInCart.img;
+          //pictureSrc.src = id.imageUrl;
           picture.appendChild(pictureSrc);
           
           let nameColor = productLine.insertCell(2);
