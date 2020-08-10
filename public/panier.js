@@ -6,7 +6,6 @@ let totalCart = document.getElementById("totalCart");
 let totalProduct = 0;
 let i;
 let quantityChoice = 0;
-//let panierShop = [];
 let linePrice;
 let orderPrice = [];
 let totalorder = document.getElementById("totalOrder");
@@ -22,17 +21,13 @@ let productInCart = panierShop[i];
 cartInfo();
 
 //récupération des données et création du panier
-for (let i = 0; i < panierShop.length; i++) {
-  //const urlParams = new URLSearchParams(window.location.search);
-  //let id = urlParams.get(panierShop[i].id);  
+for (let i = 0; i < panierShop.length; i++) {  
   let id = panierShop[i].id;
   console.log(id);
   fetch("http://localhost:3000/api/teddies/" + id)
     .then(response => response.json()
       .then(function (productInCart) {
         if (response.ok) {
-          //let productInCart = panierShop[i];
-          console.log(productInCart.id)
           let productLine = body.insertRow(-1);
           productLine.setAttribute("class", "text-center");
           productLine.setAttribute("id", "cell" + i);
@@ -51,8 +46,6 @@ for (let i = 0; i < panierShop.length; i++) {
           pictureSrc.setAttribute("width", "150");
           pictureSrc.setAttribute("height", "150");
           pictureSrc.src = productInCart.imageUrl;
-          //pictureSrc.src = productInCart[i].id.imageUrl;
-          //pictureSrc.src = id.imageUrl;
           picture.appendChild(pictureSrc);
           
           let nameColor = productLine.insertCell(2);
