@@ -16,6 +16,7 @@ let number = document.getElementById("number");
 //récuperation du panier
 let panierShop = JSON.parse(localStorage.getItem("panier"));
 console.log(panierShop);
+let productInCart = panierShop[i];
 
 //info selon qu'il y ai quelque chose dans le panier ou non
 cartInfo();
@@ -23,15 +24,14 @@ cartInfo();
 //récupération des données et création du panier
 for (let i = 0; i < panierShop.length; i++) {
   //const urlParams = new URLSearchParams(window.location.search);
-  //let id = urlParams.get(panierShop[i].id);
-  
+  //let id = urlParams.get(panierShop[i].id);  
   let id = panierShop[i].id;
-  console.log(id)
-  fetch("http://localhost:3000/api/teddies/" /*, id*/ /*+ id*/)
+  console.log(id);
+  fetch("http://localhost:3000/api/teddies/" + id)
     .then(response => response.json()
       .then(function (productInCart) {
         if (response.ok) {
-          let productInCart = panierShop[i];
+          //let productInCart = panierShop[i];
           console.log(productInCart.id)
           let productLine = body.insertRow(-1);
           productLine.setAttribute("class", "text-center");
@@ -50,7 +50,8 @@ for (let i = 0; i < panierShop.length; i++) {
           let pictureSrc = document.createElement("img");
           pictureSrc.setAttribute("width", "150");
           pictureSrc.setAttribute("height", "150");
-          pictureSrc.src = productInCart.img;
+          pictureSrc.src = productInCart.imageUrl;
+          //pictureSrc.src = productInCart[i].id.imageUrl;
           //pictureSrc.src = id.imageUrl;
           picture.appendChild(pictureSrc);
           
@@ -60,7 +61,7 @@ for (let i = 0; i < panierShop.length; i++) {
           productName.innerHTML = productInCart.name;
           nameColor.appendChild(productName);
           let productColor = document.createElement("h3");
-          productColor.innerHTML = productInCart.color;
+          productColor.innerHTML = panierShop[i].colors;
           nameColor.appendChild(productColor);
 
           let productPrice = productLine.insertCell(3);
@@ -101,9 +102,9 @@ for (let i = 0; i < panierShop.length; i++) {
           buttonRemove.addEventListener("click", () => {
             $("#cell" + i).remove();
             alert("L'article à bien été supprimé");
-            panier.splice([i], 1);
-            localStorage.setItem("panier", JSON.stringify(panier));
-            console.log(panier);
+            panierShop.splice([i], 1);
+            localStorage.setItem("panier", JSON.stringify(panierShop));
+            console.log(panierShop);
 
             cartInfo();
             numberArticle(totalNumber, quantityChoice.value, number);
@@ -132,11 +133,11 @@ let Mail;
 let Address;
 let City;
 
-//Variables qui seront utilisés pour appel des event
+//Variable qui sera utilisée pour appel des event
 let form = document.getElementById("form_1");
 
-//appel des fonctions de vérification sur la perte du focus des input
-document.getElementById("nom").addEventListener("blur", verifName); //= verifField(document.getElementById("nom"));
+//appel des fonctions de vérification sur la perte du focus des input (fonctions sur page functions.js)
+document.getElementById("nom").addEventListener("blur", verifName); 
 document.getElementById("prenom").addEventListener("blur", verifFirstName);
 document.getElementById("email").addEventListener("blur", verifMail);
 document.getElementById("adresse").addEventListener("blur", verifAddress);
@@ -149,21 +150,17 @@ const urlApi = "http://localhost:3000/api/teddies/order"
 
 //Variables pour envoi a l'API
 let contact; //formulaire
+let products; //produits commandés
 let orderToSend; //formulaire + produits commandés
+let confirmation;
 
 
 
-form.addEventListener("submit", () => {
-  preventDefault();
-
-  if (!Name || !Firstname || !Mail || !Address || !City) {
-    preventDefault();
+document.getElementById("commander").addEventListener("click", () => {
+  if (!Name || !Firstname || !Mail || !Address || !City) { 
     alert("Veuillez remplir tous les champs correctement");
-  }
-  else if (contact = "") {
-    preventDefault();
-  }
-  else {
+    preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
+  }else {
     //Création de l'objet contact pour envoi formulaire
     contact = {
       name: Name.value,
@@ -172,7 +169,13 @@ form.addEventListener("submit", () => {
       address: Address.value,
       city: City.value
     }
+    //Création de l'objet products pour envoi des produits commandés
+    products = {
+      panierShop
+    }
+
     orderToSend = { contact, products } //formulaire + produits commandés
+    console.log(orderToSend)
 
     //paramètres pour requête fetch avec methode POST
     let fetchParams = {
@@ -184,14 +187,14 @@ form.addEventListener("submit", () => {
     fetch(urlApi, fetchParams)
       .then(response => response.json())
       .then(function (order) {
-        let confirm = {
+        confirmation = {
           completeName: contact.name + " " + contact.firstName,
           price: orderPrice,
           orderId: order.orderId
         }
       })
     //Envoi de la commande au localStorage
-    let orderStorage = localStorage.setItem("order", JSON.stringify(confirm));
-    window.location = "confirmation.html";
+    let orderStorage = localStorage.setItem("order", JSON.stringify(confirmation));
+    window.location.href = "confirmation.html";
   }
 })
