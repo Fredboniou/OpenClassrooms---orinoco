@@ -79,30 +79,30 @@
 						    <tbody id="body">
 						    </tbody>
 						  </table>
-					  </div>
+					</div>
 				</div>
 				</div>
-    		</div>
+			</div>
+			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate" id="totalPanier">
+				<div class="cart-total mb-3">
+					<h3>Total Commande</h3>
+					<p class="d-flex">
+						<span id="numberArticle">Nombre d'article</span>
+						<span id="number"></span>
+					</p>
+					<hr>
+					<p class="d-flex total-price">
+						<span id="yourOrder">Le total de votre commande est de </span>
+						<span id="totalOrder"></span>
+					</p>
+				</div>
+			</div>
     		<div class="row justify-content-center" id="totalCart">
-				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
-    				<div class="cart-total mb-3">
-						<h3>Total Commande</h3>
-						<p class="d-flex">
-    						<span id="numberArticle">Nombre d'article</span>
-							<span id="number"></span>
-						</p>
-    					<hr>
-    					<p class="d-flex total-price">
-							<span id="yourOrder">Le total de votre commande est de </span>
-    						<span id="totalOrder"></span>
-    					</p>
-    				</div>
-    			</div>
     			<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
     				<div class="cart-total mb-3">
 						<h2>Passer la commande de votre(vos) peluche(s)</h2>
 						<div class="cadre">
-						  <form method="post" name="formContact" id="form_1">
+						  <form method="post" name="formContact" id="form_1" onsubmit>
 							<div class="form-group">
 							  <label for="nom">
 								Nom de famille
@@ -263,7 +263,7 @@
   <script src="js/main.js"></script>
   <script src="public/functions.js"></script>
   <script src="public/panier.js"></script>
-
+  
   <script>
 		$(document).ready(function(){
 

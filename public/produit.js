@@ -1,9 +1,11 @@
 /* Création des variables */
 let divImage = document.getElementById("divImage");
 let divDescription = document.getElementById("divDescription");
+let quantityChoice = document.getElementById("total");
 let choiceColors = document.getElementById("choiceColors");
 let addToCart = document.getElementById("addToCart");
-let panierShop = (localStorage.getItem("panier")) ? JSON.parse(localStorage.getItem("panier")) : [];;
+let panierShop = (localStorage.getItem("panier")) ? JSON.parse(localStorage.getItem("panier")) : [];
+
 /* obtention des paramètres URL */
 const urlParams = new URLSearchParams(window.location.search);
 let idBears = urlParams.get("id");
@@ -56,6 +58,14 @@ fetch("http://localhost:3000/api/teddies/" + idBears)
                     choiceColors.appendChild(productColors);
                 }
 
+                quantityChoice.addEventListener("change", () => {
+                    if (confirm("Vous avez modifié la quantité d'un article")){
+                        productPrice.textContent = bearData.price / 100 * quantityChoice.value + " €";   
+                    }else{
+                        productPrice.textContent = bearData.price / 100 + " €";
+                    }
+                })
+
                 //Ajout au panier
                 addToCart.addEventListener("click", () => {
                     //choix de la couleur obligatoire
@@ -63,14 +73,10 @@ fetch("http://localhost:3000/api/teddies/" + idBears)
                         alert("Veuillez choisir une couleur")
                         return false;
                     } else {
-                        /*panierShop.push({
-                            name: bearData.name, img: bearData.imageUrl,
-                            price: bearData.price, color: choiceColors.value
-                        });
-                        localStorage.setItem("panier", JSON.stringify(panierShop));*/
-                        panierShop.push({ id: idBears, colors: choiceColors.value })
+                        panierShop.push({ id: idBears, productQuantity: quantityChoice.value, colors: choiceColors.value,
+                        totalProduct: bearData.price * quantityChoice.value})
                         localStorage.setItem("panier", JSON.stringify(panierShop));
-                        alert("Cet article vient d\'être ajouté à votre panier");
+                        alert("Cet(ces) article(s) vient(viennent) d\'être ajouté(s) à votre panier");
                         cartIndex();
                         console.log(panierShop)
                     }
@@ -78,7 +84,6 @@ fetch("http://localhost:3000/api/teddies/" + idBears)
             }
         }
         ))
-
 
 cartIndex();
 

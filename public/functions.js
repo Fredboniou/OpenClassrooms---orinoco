@@ -3,9 +3,13 @@
 //Affichage du nombre d'articles en index
 function cartIndex() {
     let panierShop = (localStorage.getItem("panier")) ? JSON.parse(localStorage.getItem("panier")) : [];
-
+    let totalNumber = 0;
+    for(let i = 0; i < panierShop.length; i++){
+        let numberOfArticle = parseInt(panierShop[i].productQuantity);
+        totalNumber += numberOfArticle;
+    }
     let cart = document.getElementById("cart");
-    cart.textContent = panierShop.length;
+    cart.textContent = totalNumber;
 }
 
 /**************FONCTION PANIER / FORMULAIRE**************/
@@ -14,12 +18,14 @@ function cartIndex() {
 
 //info selon qu'il y ai quelque chose dans le panier ou non
 function cartInfo() {
-    if (panierShop.length == 0 || panierShop.length == null) {
+    if (panierShop.length == 0 || panierShop.length === null) {
         let emptyCart = document.createElement("p");
         emptyCart.setAttribute("id", "infoEmpty");
         emptyCart.innerHTML = "Votre panier est vide";
         section.prepend(emptyCart)
+        document.getElementById("panier-recap").setAttribute("hidden", "true");
         document.getElementById("form_1").setAttribute("hidden", "true");
+        document.getElementById("totalPanier").setAttribute("hidden", "true");
         totalCart.setAttribute("hidden", "true");
     } else {
         let fullCart = document.createElement("p");
@@ -30,9 +36,10 @@ function cartInfo() {
 }
 
 //calcul du prix d'un produit en fonction de la quantité
-function calcul(price, quantity, total) {
-    linePrice = (price / 100) * quantity;
-    total.innerHTML = linePrice + " €";
+/*function calcul(price, quantity) {
+    let linePrice = (price / 100) * quantity;
+    totalLine.innerHTML = linePrice + " €";
+    return linePrice;
 }
 
 //calcul du nombre total d'article
@@ -46,13 +53,13 @@ function numberArticle(tNumber, quantity, total) {
 }
 
 //calcul du total de la commande
-function totalOrder(tPrice, price, total) {
-    tPrice += price;
-    total.innerHTML = tPrice + " €";
-    total.style.fontWeight = "bold";
-    total.style.textAlign = "center";
-    total.style.fontSize = "20px";
-}
+function totalOrder(tPrice) {
+    let totalorder = document.getElementById("totalOrder");
+    totalorder.innerHTML = tPrice + " €";
+    totalorder.style.fontWeight = "bold";
+    totalorder.style.textAlign = "center";
+    totalorder.style.fontSize = "20px";
+}*/
 
 /*         FORMULAIRE         */
 

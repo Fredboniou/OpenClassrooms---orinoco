@@ -3,19 +3,13 @@ let body = document.getElementById("body");
 let section = document.getElementById("info_panier");
 let tableOrder = document.getElementById("panier-recap");
 let totalCart = document.getElementById("totalCart");
-let totalProduct = 0;
-let i;
-let quantityChoice = 0;
-let linePrice;
-let orderPrice = [];
-let totalorder = document.getElementById("totalOrder");
-let totalNumber = [];
+let orderPrice = 0;
+let totalNumber = 0;
 let number = document.getElementById("number");
+let priceToPay = document.getElementById("totalOrder");
 
 //récuperation du panier
 let panierShop = JSON.parse(localStorage.getItem("panier"));
-console.log(panierShop);
-let productInCart = panierShop[i];
 
 //info selon qu'il y ai quelque chose dans le panier ou non
 cartInfo();
@@ -23,6 +17,7 @@ cartInfo();
 //récupération des données et création du panier
 for (let i = 0; i < panierShop.length; i++) {  
   let id = panierShop[i].id;
+  let productInCart = panierShop[i];
   console.log(id);
   fetch("http://localhost:3000/api/teddies/" + id)
     .then(response => response.json()
@@ -66,30 +61,16 @@ for (let i = 0; i < panierShop.length; i++) {
           let divQuantity = document.createElement("div");
           divQuantity.setAttribute("class", "input-group mb-3");
           productQuantity.appendChild(divQuantity);
-          let quantityChoice = document.createElement("input");
-          quantityChoice.setAttribute("type", "number");
-          quantityChoice.setAttribute("name", "quantity");
-          quantityChoice.setAttribute("class", "quantity form-control input-number");
-          quantityChoice.setAttribute("id", "total")
-          quantityChoice.setAttribute("value", "1");
-          quantityChoice.setAttribute("min", "1");
-          quantityChoice.setAttribute("max", "100");
+          let quantityChoice = document.createElement("p");
+          quantityChoice.setAttribute("id", "product_quantity");
+          quantityChoice.textContent = panierShop[i].productQuantity;
+          quantityChoice.style.margin = "auto";
+          quantityChoice.style.color = "black";
           divQuantity.appendChild(quantityChoice);
 
           let totalLine = productLine.insertCell(5);
           totalLine.setAttribute("id", "totalLine");
-
-          let modifyQuantity = document.getElementById("total");
-          modifyQuantity.addEventListener("change", () => {
-            alert("Vous avez modifié la quantité d'un article");
-            calcul(productInCart.price, quantityChoice.value, totalLine);
-            numberArticle(totalNumber, quantityChoice.value, number);
-            totalOrder(orderPrice, linePrice, totalorder);
-          })
-
-          numberArticle(totalNumber, quantityChoice.value, number);
-          calcul(productInCart.price, quantityChoice.value, totalLine);
-          totalOrder(orderPrice, linePrice, totalorder);
+          totalLine.textContent = panierShop[i].totalProduct / 100 + " €";
 
           //suppression d'un produit
           buttonRemove.addEventListener("click", () => {
@@ -98,14 +79,21 @@ for (let i = 0; i < panierShop.length; i++) {
             panierShop.splice([i], 1);
             localStorage.setItem("panier", JSON.stringify(panierShop));
             console.log(panierShop);
-
+            window.location.reload();
             cartInfo();
-            numberArticle(totalNumber, quantityChoice.value, number);
-            totalOrder(orderPrice, linePrice, totalorder);
-          })
-        }
+            })
+          }
       }))
 }
+for(let j = 0; j < panierShop.length; j++){
+    let total = panierShop[j].totalProduct;
+    orderPrice += total;
+    let numberOfArticle = parseInt(panierShop[j].productQuantity);
+    totalNumber += numberOfArticle;
+}
+
+number.textContent = totalNumber;
+priceToPay.textContent = orderPrice / 100 + " €";
 
 
 //Validation formulaire avec coloration des champs incorrects
@@ -154,6 +142,7 @@ document.getElementById("commander").addEventListener("click", () => {
     alert("Veuillez remplir tous les champs correctement");
     preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
   }else {
+    alert("confirm")
     //Création de l'objet contact pour envoi formulaire
     contact = {
       name: Name.value,
@@ -188,6 +177,6 @@ document.getElementById("commander").addEventListener("click", () => {
       })
     //Envoi de la commande au localStorage
     let orderStorage = localStorage.setItem("order", JSON.stringify(confirmation));
-    window.location.href = "confirmation.html";
+    window.location.href = "../confirmation.html";
   }
 })
