@@ -3,10 +3,11 @@ let body = document.getElementById("body");
 let section = document.getElementById("info_panier");
 let tableOrder = document.getElementById("panier-recap");
 let totalCart = document.getElementById("totalCart");
-let orderPrice = 0;
+let orderPrice = null;
 let totalNumber = 0;
 let number = document.getElementById("number");
 let priceToPay = document.getElementById("totalOrder");
+let products = [];
 
 //récuperation du panier
 let panierShop = JSON.parse(localStorage.getItem("panier"));
@@ -90,13 +91,26 @@ for(let j = 0; j < panierShop.length; j++){
     orderPrice += total;
     let numberOfArticle = parseInt(panierShop[j].productQuantity);
     totalNumber += numberOfArticle;
+    products = panierShop[j].id;
 }
 
 number.textContent = totalNumber;
+number.style.fontWeight = "bold";
+number.style.fontSize = "20px";
+number.style.textAlign = "center";
+number.style.color = "black";
 priceToPay.textContent = orderPrice / 100 + " €";
+priceToPay.style.fontWeight = "bold";
+priceToPay.style.textAlign = "center";
+priceToPay.style.fontSize = "20px";
 
 
 //Validation formulaire avec coloration des champs incorrects
+let lastname = document.getElementById("nom");
+let firstname = document.getElementById("prenom");
+let email = document.getElementById("email");
+let address = document.getElementById("adresse");
+let city = document.getElementById("ville");
 
 //Création des regex
 let regex = /^[a-zA-Z\é\è\ê\ï\ë\ç\s\'-]+$/;
@@ -107,22 +121,16 @@ let regexAddress = /^[0-9]* ?[a-zA-Z\s,\.]*$/;
 //[a-zA-Z\s,\.]* => ensemble quelconque de lettres, espaces, virgules ou points 
 //[0-9]* ? => ensemble quelconque de chiffres répété n'importe quel nombre de fois suivi ou non d'un espace
 
-//Création des variables pour vérification des input formulaire
-let Name;
-let Firstname;
-let Mail;
-let Address;
-let City;
 
 //Variable qui sera utilisée pour appel des event
 let form = document.getElementById("form_1");
 
 //appel des fonctions de vérification sur la perte du focus des input (fonctions sur page functions.js)
-document.getElementById("nom").addEventListener("blur", verifName); 
-document.getElementById("prenom").addEventListener("blur", verifFirstName);
-document.getElementById("email").addEventListener("blur", verifMail);
-document.getElementById("adresse").addEventListener("blur", verifAddress);
-document.getElementById("ville").addEventListener("blur", verifCity);
+lastname.addEventListener("blur", verifName);
+firstname.addEventListener("blur", verifFirstName);
+email.addEventListener("blur", verifMail);
+address.addEventListener("blur", verifAddress);
+city.addEventListener("blur", verifCity);
 
 
 //Envoi du formulaire
@@ -131,33 +139,35 @@ const urlApi = "http://localhost:3000/api/teddies/order"
 
 //Variables pour envoi a l'API
 let contact; //formulaire
-let products; //produits commandés
+//let products; //produits commandés
 let orderToSend; //formulaire + produits commandés
-let confirmation;
+//let confirmation;
 
 
 
 document.getElementById("commander").addEventListener("click", () => {
-  if (!Name || !Firstname || !Mail || !Address || !City) { 
+  if (!nom || !prenom || !mail || !adresse || !ville) { 
     alert("Veuillez remplir tous les champs correctement");
-    preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
+    //preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
   }else {
     alert("confirm")
+    console.log(products)
     //Création de l'objet contact pour envoi formulaire
     contact = {
-      name: Name.value,
-      firstName: Firstname.value,
-      email: Mail.value,
-      address: Address.value,
-      city: City.value
+      lastName: lastname.value,
+      firstName: firstname.value,
+      eMail: email.value,
+      deliveryAddress: address.value,
+      deliveryCity: city.value
     }
+    alert("contact ok")
     //Création de l'objet products pour envoi des produits commandés
-    products = {
-      panierShop
-    }
-
+    /*products = {
+      id
+    }*/
+    confirm("products ok. continue?")
     orderToSend = { contact, products } //formulaire + produits commandés
-    console.log(orderToSend)
+    confirm("orderToSend ok. continue?")
 
     //paramètres pour requête fetch avec methode POST
     let fetchParams = {
@@ -165,18 +175,18 @@ document.getElementById("commander").addEventListener("click", () => {
       body: JSON.stringify(orderToSend),//converti les données en chaine JSON
       headers: { "Content-type": "application/json" }//l'objet est en format JSON
     };
+    alert("vous allez être redirigé vers la page de confirmation.\nVeuillez noter votre numéro de commande.")
     //requête fetch pour récupération des paramètres de commande
     fetch(urlApi, fetchParams)
       .then(response => response.json())
       .then(function (order) {
-        confirmation = {
-          completeName: contact.name + " " + contact.firstName,
+        let confirmation = {
+          completeName: contact.lastName + " " + contact.firstName,
           price: orderPrice,
           orderId: order.orderId
         }
+        let orderStorage = localStorage.setItem("order", JSON.stringify(confirmation));
+        window.location = "./confirmation.html";
       })
-    //Envoi de la commande au localStorage
-    let orderStorage = localStorage.setItem("order", JSON.stringify(confirmation));
-    window.location.href = "../confirmation.html";
   }
 })

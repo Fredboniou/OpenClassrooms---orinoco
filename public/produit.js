@@ -11,9 +11,8 @@ const urlParams = new URLSearchParams(window.location.search);
 let idBears = urlParams.get("id");
 console.log(idBears);
 
-cartIndex();
-
 //Affichage du nombre d'articles en index
+cartIndex();
 
 /* Récupération des données pour chaque produit */
 fetch("http://localhost:3000/api/teddies/" + idBears)

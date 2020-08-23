@@ -35,32 +35,6 @@ function cartInfo() {
     }
 }
 
-//calcul du prix d'un produit en fonction de la quantité
-/*function calcul(price, quantity) {
-    let linePrice = (price / 100) * quantity;
-    totalLine.innerHTML = linePrice + " €";
-    return linePrice;
-}
-
-//calcul du nombre total d'article
-function numberArticle(tNumber, quantity, total) {
-    tNumber += quantity;
-    total.innerHTML = tNumber;
-    total.style.fontWeight = "bold";
-    total.style.fontSize = "20px";
-    total.style.textAlign = "center";
-    total.style.color = "black";
-}
-
-//calcul du total de la commande
-function totalOrder(tPrice) {
-    let totalorder = document.getElementById("totalOrder");
-    totalorder.innerHTML = tPrice + " €";
-    totalorder.style.fontWeight = "bold";
-    totalorder.style.textAlign = "center";
-    totalorder.style.fontSize = "20px";
-}*/
-
 /*         FORMULAIRE         */
 
 //Coloration du champ incorrect
@@ -72,12 +46,19 @@ function highlight(field, error) {
     }
 }
 
+//Création des variables pour vérification des input formulaire
+let nom;
+let prenom;
+let mail;
+let adresse;
+let ville;
+
 //Vérification du nom
 function verifName(event) {
     let field = document.getElementById(event.srcElement.id);
-    Name = regex.test(field.value);
+    nom = regex.test(field.value);
 
-    if (!Name) {
+    if (!nom || nom == "") {
         highlight(field, true);
         return false;
     } else {
@@ -89,9 +70,9 @@ function verifName(event) {
 //Vérification du prénom
 function verifFirstName(event) {
     let field = document.getElementById(event.srcElement.id);
-    Firstname = regex.test(field.value);
+    prenom = regex.test(field.value);
 
-    if (!Firstname) {
+    if (!prenom || prenom == "") {
         highlight(field, true);
         return false;
     } else {
@@ -103,9 +84,9 @@ function verifFirstName(event) {
 //Vérification de l'email
 function verifMail(event) {
     let field = document.getElementById(event.srcElement.id);
-    Mail = regexMail.test(field.value);
+    mail = regexMail.test(field.value);
 
-    if (!Mail) {
+    if (!mail || mail == "") {
         highlight(field, true);
         return false;
     } else {
@@ -117,9 +98,9 @@ function verifMail(event) {
 //Vérification de l'adresse
 function verifAddress(event) {
     let field = document.getElementById(event.srcElement.id);
-    Address = regexAddress.test(field.value);
+    adresse = regexAddress.test(field.value);
 
-    if (!Address) {
+    if (!adresse || adresse == "") {
         highlight(field, true);
         return false;
     } else {
@@ -131,9 +112,9 @@ function verifAddress(event) {
 //Vérification de la ville
 function verifCity(event) {
     let field = document.getElementById(event.srcElement.id);
-    City = regex.test(field.value);
+    ville = regex.test(field.value);
 
-    if (!City) {
+    if (!ville || ville == "") {
         highlight(field, true);
         return false;
     } else {
