@@ -53,7 +53,7 @@ let mail;
 let adresse;
 let ville;
 
-//Vérification du nom
+//Vérification du nom, prenom et ville
 function verifName(event) {
     let field = document.getElementById(event.srcElement.id);
     nom = regex.test(field.value);

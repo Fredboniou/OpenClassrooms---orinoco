@@ -139,19 +139,16 @@ const urlApi = "http://localhost:3000/api/teddies/order"
 
 //Variables pour envoi a l'API
 let contact; //formulaire
-//let products; //produits commandés
 let orderToSend; //formulaire + produits commandés
-//let confirmation;
 
 
 
 document.getElementById("commander").addEventListener("click", () => {
   if (!nom || !prenom || !mail || !adresse || !ville) { 
     alert("Veuillez remplir tous les champs correctement");
-    //preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
+    preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
   }else {
     alert("confirm")
-    console.log(products)
     //Création de l'objet contact pour envoi formulaire
     contact = {
       lastName: lastname.value,
@@ -161,13 +158,11 @@ document.getElementById("commander").addEventListener("click", () => {
       deliveryCity: city.value
     }
     alert("contact ok")
-    //Création de l'objet products pour envoi des produits commandés
-    /*products = {
-      id
-    }*/
-    confirm("products ok. continue?")
+    console.log(contact)
+    console.log(products)
     orderToSend = { contact, products } //formulaire + produits commandés
     confirm("orderToSend ok. continue?")
+    console.log(orderToSend)
 
     //paramètres pour requête fetch avec methode POST
     let fetchParams = {
@@ -186,7 +181,7 @@ document.getElementById("commander").addEventListener("click", () => {
           orderId: order.orderId
         }
         let orderStorage = localStorage.setItem("order", JSON.stringify(confirmation));
-        window.location = "./confirmation.html";
+        window.location = "./confirmation.html"
       })
   }
 })
