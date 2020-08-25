@@ -3,7 +3,6 @@ let textConfirm = document.getElementById("textConfirm");
 
 //récupération du localStorage avec la commande converti en objet js
 let confirmation = JSON.parse(localStorage.getItem("order"));
-console.log(confirmation)
 
 //construction de la page de confirmation
 let confirmOrder = document.createElement("p");

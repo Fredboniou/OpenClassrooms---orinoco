@@ -9,7 +9,7 @@ function cartIndex() {
         totalNumber += numberOfArticle;
     }
     let cart = document.getElementById("cart");
-    cart.textContent = totalNumber;
+    cart.textContent = panierShop.length;
 }
 
 /**************FONCTION PANIER / FORMULAIRE**************/

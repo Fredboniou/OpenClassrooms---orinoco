@@ -7,7 +7,7 @@ let addToCart = document.getElementById("addToCart");
 let panierShop = (localStorage.getItem("panier")) ? JSON.parse(localStorage.getItem("panier")) : [];
 
 /* obtention des paramètres URL */
-const urlParams = new URLSearchParams(window.location.search);
+const urlParams = new URLSearchParams(window.location.search);//renvoie un objet contenant des infos concernant l'url en récupérant la partie qui suit le '?'
 let idBears = urlParams.get("id");
 console.log(idBears);
 
@@ -62,6 +62,7 @@ fetch("http://localhost:3000/api/teddies/" + idBears)
                         productPrice.textContent = bearData.price / 100 * quantityChoice.value + " €";   
                     }else{
                         productPrice.textContent = bearData.price / 100 + " €";
+                        quantityChoice.value = 1;
                     }
                 })
 

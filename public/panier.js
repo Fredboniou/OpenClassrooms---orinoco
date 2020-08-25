@@ -91,7 +91,7 @@ for(let j = 0; j < panierShop.length; j++){
     orderPrice += total;
     let numberOfArticle = parseInt(panierShop[j].productQuantity);
     totalNumber += numberOfArticle;
-    products = panierShop[j].id;
+    products.push(panierShop[j].id);
 }
 
 number.textContent = totalNumber;
@@ -143,26 +143,22 @@ let orderToSend; //formulaire + produits commandés
 
 
 
-document.getElementById("commander").addEventListener("click", () => {
+document.getElementById("commander").addEventListener("click", (e) => {
+  e.preventDefault();
   if (!nom || !prenom || !mail || !adresse || !ville) { 
     alert("Veuillez remplir tous les champs correctement");
-    preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
+    //preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
   }else {
-    alert("confirm")
     //Création de l'objet contact pour envoi formulaire
     contact = {
       lastName: lastname.value,
       firstName: firstname.value,
-      eMail: email.value,
-      deliveryAddress: address.value,
-      deliveryCity: city.value
+      email: email.value,
+      address: address.value,
+      city: city.value
     }
-    alert("contact ok")
-    console.log(contact)
-    console.log(products)
+
     orderToSend = { contact, products } //formulaire + produits commandés
-    confirm("orderToSend ok. continue?")
-    console.log(orderToSend)
 
     //paramètres pour requête fetch avec methode POST
     let fetchParams = {
@@ -170,17 +166,17 @@ document.getElementById("commander").addEventListener("click", () => {
       body: JSON.stringify(orderToSend),//converti les données en chaine JSON
       headers: { "Content-type": "application/json" }//l'objet est en format JSON
     };
-    alert("vous allez être redirigé vers la page de confirmation.\nVeuillez noter votre numéro de commande.")
+    alert("vous allez être redirigé vers la page de confirmation.\nVeuillez noter votre numéro de commande,\nil vous sera demandé pour toute demande de sav.")
     //requête fetch pour récupération des paramètres de commande
     fetch(urlApi, fetchParams)
       .then(response => response.json())
-      .then(function (order) {
+      .then(function (order) { //On crée l'objet confirmation en renvoyant l'objet JSON sous forme d'une chaine de caractère
         let confirmation = {
           completeName: contact.lastName + " " + contact.firstName,
           price: orderPrice,
           orderId: order.orderId
         }
-        let orderStorage = localStorage.setItem("order", JSON.stringify(confirmation));
+        localStorage.setItem("order", JSON.stringify(confirmation));
         window.location = "./confirmation.html"
       })
   }

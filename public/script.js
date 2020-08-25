@@ -55,7 +55,7 @@ fetch("http://localhost:3000/api/teddies/")
 
 
 //On défini le panier et on le converti en objet JS avec JSON.parse
-let panier = JSON.parse(localStorage.getItem("panier"));
+let panierShop = JSON.parse(localStorage.getItem("panier"));
 
 //Affichage du nombre d'articles en index
 cartIndex();
