@@ -80,7 +80,7 @@ fetch("http://localhost:3000/api/teddies/" + idBears)
                         localStorage.setItem("panier", JSON.stringify(panierShop));
                         alert("Cet(ces) article(s) vient(viennent) d\'être ajouté(s) à votre panier");
                         cartIndex();
-                        console.log(panierShop)
+                        console.log(panierShop);
                     }
                 })
             }

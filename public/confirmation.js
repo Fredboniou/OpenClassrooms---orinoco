@@ -21,14 +21,14 @@ identification.style.fontSize = "20px";
 identification.style.color = "black";
 
 let returnHome = document.createElement("input");
-returnHome.setAttribute("type", "button")
+returnHome.setAttribute("type", "button");
 returnHome.setAttribute("value", "Retour à la page d'accueil");
 returnHome.setAttribute("id", "home");
 
 returnHome.addEventListener("click", () => {
     localStorage.clear();
     window.location = "./index.html"
-})
+});
 
 textConfirm.appendChild(confirmOrder);
 textConfirm.appendChild(totalorder);
