@@ -46,7 +46,7 @@ fetch("http://localhost:3000/api/teddies/")
           /* Contenu des balises HTML */
           productName.textContent = bears.name;
           seeProduct.textContent = "voir le produit";
-          }
+        }
       } else {
         console.error("retour du serveur : ", response.status);
       }

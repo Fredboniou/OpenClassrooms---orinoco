@@ -58,9 +58,9 @@ fetch("http://localhost:3000/api/teddies/" + idBears)
                 }
 
                 quantityChoice.addEventListener("change", () => {
-                    if (confirm("Vous avez modifié la quantité d'un article")){
-                        productPrice.textContent = bearData.price / 100 * quantityChoice.value + " €";   
-                    }else{
+                    if (confirm("Vous avez modifié la quantité d'un article")) {
+                        productPrice.textContent = bearData.price / 100 * quantityChoice.value + " €";
+                    } else {
                         productPrice.textContent = bearData.price / 100 + " €";
                         quantityChoice.value = 1;
                     }
@@ -73,8 +73,10 @@ fetch("http://localhost:3000/api/teddies/" + idBears)
                         alert("Veuillez choisir une couleur")
                         return false;
                     } else {
-                        panierShop.push({ id: idBears, productQuantity: quantityChoice.value, colors: choiceColors.value,
-                        totalProduct: bearData.price * quantityChoice.value})
+                        panierShop.push({
+                            id: idBears, productQuantity: quantityChoice.value, colors: choiceColors.value,
+                            totalProduct: bearData.price * quantityChoice.value
+                        })
                         localStorage.setItem("panier", JSON.stringify(panierShop));
                         alert("Cet(ces) article(s) vient(viennent) d\'être ajouté(s) à votre panier");
                         cartIndex();

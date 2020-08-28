@@ -15,8 +15,11 @@ let panierShop = JSON.parse(localStorage.getItem("panier"));
 //info selon qu'il y ai quelque chose dans le panier ou non
 cartInfo();
 
+
+/***********************Tableau des articles du panier***********************/
+
 //récupération des données et création du panier
-for (let i = 0; i < panierShop.length; i++) {  
+for (let i = 0; i < panierShop.length; i++) {
   let id = panierShop[i].id;
   let productInCart = panierShop[i];
   console.log(id);
@@ -35,7 +38,7 @@ for (let i = 0; i < panierShop.length; i++) {
           buttonRemove.style.width = "14px";
           buttonRemove.style.height = "20px";
           productRemove.appendChild(buttonRemove);
-          
+
           let picture = productLine.insertCell(1);
           picture.setAttribute("class", "image-product");
           let pictureSrc = document.createElement("img");
@@ -43,7 +46,7 @@ for (let i = 0; i < panierShop.length; i++) {
           pictureSrc.setAttribute("height", "150");
           pictureSrc.src = productInCart.imageUrl;
           picture.appendChild(pictureSrc);
-          
+
           let nameColor = productLine.insertCell(2);
           nameColor.setAttribute("class", "product-name");
           let productName = document.createElement("h3");
@@ -82,16 +85,16 @@ for (let i = 0; i < panierShop.length; i++) {
             console.log(panierShop);
             window.location.reload();
             cartInfo();
-            })
-          }
+          })
+        }
       }))
 }
-for(let j = 0; j < panierShop.length; j++){
-    let total = panierShop[j].totalProduct;
-    orderPrice += total;
-    let numberOfArticle = parseInt(panierShop[j].productQuantity);
-    totalNumber += numberOfArticle;
-    products.push(panierShop[j].id);
+for (let j = 0; j < panierShop.length; j++) {
+  let total = panierShop[j].totalProduct;
+  orderPrice += total;
+  let numberOfArticle = parseInt(panierShop[j].productQuantity);
+  totalNumber += numberOfArticle;
+  products.push(panierShop[j].id); //Envoi de l'id des produits au localStorage
 }
 
 number.textContent = totalNumber;
@@ -112,6 +115,9 @@ let email = document.getElementById("email");
 let address = document.getElementById("adresse");
 let city = document.getElementById("ville");
 
+
+/*******************Formulaire*******************/
+
 //Création des regex
 let regex = /^[a-zA-Z\é\è\ê\ï\ë\ç\s\'-]+$/;
 //la regex accepte les caractères alphabétiques minuscules et majuscules , 
@@ -121,9 +127,6 @@ let regexAddress = /^[0-9]* ?[a-zA-Z\s,\.]*$/;
 //[a-zA-Z\s,\.]* => ensemble quelconque de lettres, espaces, virgules ou points 
 //[0-9]* ? => ensemble quelconque de chiffres répété n'importe quel nombre de fois suivi ou non d'un espace
 
-
-//Variable qui sera utilisée pour appel des event
-let form = document.getElementById("form_1");
 
 //appel des fonctions de vérification sur la perte du focus des input (fonctions sur page functions.js)
 lastname.addEventListener("blur", verifName);
@@ -144,11 +147,10 @@ let orderToSend; //formulaire + produits commandés
 
 
 document.getElementById("commander").addEventListener("click", (e) => {
-  e.preventDefault();
-  if (!nom || !prenom || !mail || !adresse || !ville) { 
+  e.preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
+  if (!nom || !prenom || !mail || !adresse || !ville) {
     alert("Veuillez remplir tous les champs correctement");
-    //preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
-  }else {
+  } else {
     //Création de l'objet contact pour envoi formulaire
     contact = {
       lastName: lastname.value,
@@ -157,8 +159,11 @@ document.getElementById("commander").addEventListener("click", (e) => {
       address: address.value,
       city: city.value
     }
+    console.log(contact);
+    console.log(products);
 
     orderToSend = { contact, products } //formulaire + produits commandés
+    console.log(orderToSend);
 
     //paramètres pour requête fetch avec methode POST
     let fetchParams = {
@@ -166,7 +171,7 @@ document.getElementById("commander").addEventListener("click", (e) => {
       body: JSON.stringify(orderToSend),//converti les données en chaine JSON
       headers: { "Content-type": "application/json" }//l'objet est en format JSON
     };
-    alert("vous allez être redirigé vers la page de confirmation.\nVeuillez noter votre numéro de commande,\nil vous sera demandé pour toute demande de sav.")
+    alert("Vous allez être redirigé(e) vers la page de confirmation.\nVeuillez noter votre numéro de commande,\nil vous sera demandé pour toute demande de sav.")
     //requête fetch pour récupération des paramètres de commande
     fetch(urlApi, fetchParams)
       .then(response => response.json())
