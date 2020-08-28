@@ -3,11 +3,6 @@
 //Affichage du nombre d'articles en index
 function cartIndex() {
     let panierShop = (localStorage.getItem("panier")) ? JSON.parse(localStorage.getItem("panier")) : [];
-    //let totalNumber = 0;
-    //for (let i = 0; i < panierShop.length; i++) {
-      //  let numberOfArticle = parseInt(panierShop[i].productQuantity);
-       // totalNumber += numberOfArticle;
-    //}
     let cart = document.getElementById("cart");
     cart.textContent = panierShop.length;
 }
@@ -18,7 +13,7 @@ function cartIndex() {
 
 //info selon qu'il y ai quelque chose dans le panier ou non
 function cartInfo() {
-    if (panierShop.length == 0 || panierShop.length === null) {
+    if (panierShop.length == 0 || panierShop.length == null) {
         let emptyCart = document.createElement("p");
         emptyCart.setAttribute("id", "infoEmpty");
         emptyCart.innerHTML = "Votre panier est vide";

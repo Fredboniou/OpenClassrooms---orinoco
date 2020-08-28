@@ -10,7 +10,7 @@ let priceToPay = document.getElementById("totalOrder");
 let products = [];
 
 //récuperation du panier
-let panierShop = JSON.parse(localStorage.getItem("panier"));
+let panierShop = (localStorage.getItem("panier")) ? JSON.parse(localStorage.getItem("panier")) : [];
 
 //info selon qu'il y ai quelque chose dans le panier ou non
 cartInfo();
