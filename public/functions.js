@@ -92,15 +92,10 @@ function verifMail(event) {
 
 //Vérification de l'adresse
 function verifAddress(event) {
-    let field = document.getElementById(event.srcElement.id);
-    adresse = regexAddress.test(field.value);
-
-    if (!adresse || adresse == "") {
-        highlight(field, true);
-        return false;
-    } else {
-        highlight(field, false);
+    if(document.getElementById("adresse").value !== ""){
         return true;
+    }else{
+        document.getElementById("adresse").style.backgroundColor = "red";
     }
 }
 

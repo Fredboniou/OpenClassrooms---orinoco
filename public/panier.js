@@ -123,9 +123,6 @@ let regex = /^[a-zA-Z\é\è\ê\ï\ë\ç\s\'-]+$/;
 //la regex accepte les caractères alphabétiques minuscules et majuscules , 
 //les espaces et les tirets
 let regexMail = /^([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4})$/;
-let regexAddress = /^[0-9]* ?[a-zA-Z\s,\.]*$/;
-//[a-zA-Z\s,\.]* => ensemble quelconque de lettres, espaces, virgules ou points 
-//[0-9]* ? => ensemble quelconque de chiffres répété n'importe quel nombre de fois suivi ou non d'un espace
 
 
 //appel des fonctions de vérification sur la perte du focus des input (fonctions sur page functions.js)
@@ -148,7 +145,7 @@ let orderToSend; //formulaire + produits commandés
 
 document.getElementById("commander").addEventListener("click", (e) => {
   e.preventDefault(); //la méthode preventDefault empêche la soumission du formulaire si un des input n'est pas correct
-  if (!nom || !prenom || !mail || !adresse || !ville) {
+  if (!nom || !prenom || !mail || !address.value || !ville) {
     alert("Veuillez remplir tous les champs correctement");
   } else {
     //Création de l'objet contact pour envoi formulaire
