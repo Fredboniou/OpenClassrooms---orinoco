@@ -93,6 +93,7 @@ function verifMail(event) {
 //Vérification de l'adresse
 function verifAddress(event) {
     if(document.getElementById("adresse").value !== ""){
+        document.getElementById("adresse").style.backgroundColor = "";
         return true;
     }else{
         document.getElementById("adresse").style.backgroundColor = "red";
