@@ -44,6 +44,7 @@ for (let i = 0; i < panierShop.length; i++) {
           let pictureSrc = document.createElement("img");
           pictureSrc.setAttribute("width", "150");
           pictureSrc.setAttribute("height", "150");
+          pictureSrc.setAttribute("alt", "ours en peluche fabriqué à la main");
           pictureSrc.src = productInCart.imageUrl;
           picture.appendChild(pictureSrc);
 
