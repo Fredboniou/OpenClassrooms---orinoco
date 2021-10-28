@@ -7,6 +7,7 @@ function cartIndex() {
     cart.textContent = panierShop.length;
 }
 
+/*************FONCTION D'AFFICHAGE DES PRODUITS EN PREMIERE PAGE***************/
 function indexDisplay(image, name, id) {
     divRow.innerHTML += 
           `<div class='col-sm-6 col-md-6 col-lg-4 ftco-animate fadeInUp ftco-animated'>
