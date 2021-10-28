@@ -23,6 +23,39 @@ function indexDisplay(image, name, id) {
               </div>
             </div>
           </div>`
+};
+
+/************FONCTION D'AFFICHAGE DU PRODUIT CHOISI*************************/
+function productDisplay(image, name, price, description) {
+    divRow.innerHTML = `
+                <div class="col-lg-6 mb-5 ftco-animate fadeInUp ftco-animated" id="divImage">
+    			    <img src="${image}" class="img-fluid" alt="Colorlib Template">
+                </div>
+                <div class="col-lg-6 product-details pl-md-5 ftco-animate fadeInUp ftco-animated" id="divDescription">
+					<div class="row mt-4">
+						<div class="col-md-6">
+							<div class="input-group mb-3">
+								<h4 id="quantity-text">Quantité</h4>
+								<input type="number" name="quantity" class="quantity form-control input-number" id="total" value="1" min="1" max="100">
+							</div>
+						</div> 
+						<div class="col-md-6">
+							<div class="form-group d-flex">
+		              			<div class="select-wrap">
+	                  				<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+	                  				<select name="selection_couleur" id="choiceColors" class="form-control">
+										<option selected value="">Choisissez votre couleur</option>
+	                  				</select>
+	                			</div>
+		            		</div>
+						</div>
+						  <button id="addToCart" class="btn btn-black py-3 px-5">Ajouter au panier</button>
+					</div>
+    			    <h3 class="productName">${name}</h3>
+                    <p class="price"><span class="productPrice" id="productPrice">${price / 100} €</span></p>
+                    <p class="productDescription">${description}</p>
+                </div>
+                `
 }
 
 /**************FONCTION PANIER / FORMULAIRE**************/
