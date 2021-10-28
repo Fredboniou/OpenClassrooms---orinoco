@@ -7,6 +7,23 @@ function cartIndex() {
     cart.textContent = panierShop.length;
 }
 
+function indexDisplay(image, name, id) {
+    divRow.innerHTML += 
+          `<div class='col-sm-6 col-md-6 col-lg-4 ftco-animate fadeInUp ftco-animated'>
+            <div class='product'>
+              <img src='${image}' alt='ours en peluche' class='img-fluid'>
+              <div class='text py-3 px-3'>
+                <h3 class='productName'>${name}</h3>
+                <p class='bottom-area d-flex px-3'>
+                  <a href='produit.html?id=${id}' class='add-to-cart text-center py-2 mr-1'>
+                    <span class='see-product'>Voir le produit</span>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>`
+}
+
 /**************FONCTION PANIER / FORMULAIRE**************/
 
 /*              PANIER              */
