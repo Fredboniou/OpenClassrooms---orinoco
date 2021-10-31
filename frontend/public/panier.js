@@ -21,75 +21,19 @@ cartInfo();
 //récupération des données et création du panier
 for (let i = 0; i < panierShop.length; i++) {
   let id = panierShop[i].id;
-  let productInCart = panierShop[i];
+  //let productInCart = panierShop[i];
   console.log(id);
   fetch("http://localhost:3000/api/teddies/" + id)
     .then(response => response.json()
       .then(function (productInCart) {
         if (response.ok) {
-          let productLine = body.insertRow(-1);
-          productLine.setAttribute("class", "text-center");
-          productLine.setAttribute("id", "cell" + i);
-
-          let productRemove = productLine.insertCell(0);
-          productRemove.setAttribute("class", "product-remove");
-          let buttonRemove = document.createElement("button");
-          buttonRemove.innerHTML = "X";
-          buttonRemove.style.width = "14px";
-          buttonRemove.style.height = "20px";
-          productRemove.appendChild(buttonRemove);
-
-          let picture = productLine.insertCell(1);
-          picture.setAttribute("class", "image-product");
-          let pictureSrc = document.createElement("img");
-          pictureSrc.setAttribute("width", "150");
-          pictureSrc.setAttribute("height", "150");
-          pictureSrc.setAttribute("alt", "ours en peluche fabriqué à la main");
-          pictureSrc.src = productInCart.imageUrl;
-          picture.appendChild(pictureSrc);
-
-          let nameColor = productLine.insertCell(2);
-          nameColor.setAttribute("class", "product-name");
-          let productName = document.createElement("h3");
-          productName.innerHTML = productInCart.name;
-          nameColor.appendChild(productName);
-          let productColor = document.createElement("h3");
-          productColor.innerHTML = panierShop[i].colors;
-          nameColor.appendChild(productColor);
-
-          let productPrice = productLine.insertCell(3);
-          productPrice.setAttribute("class", "price");
-          productPrice.innerHTML = productInCart.price / 100 + " €";
-
-          let productQuantity = productLine.insertCell(4);
-          productQuantity.setAttribute("class", "quantity");
-          let divQuantity = document.createElement("div");
-          divQuantity.setAttribute("class", "input-group mb-3");
-          productQuantity.appendChild(divQuantity);
-          let quantityChoice = document.createElement("p");
-          quantityChoice.setAttribute("id", "product_quantity");
-          quantityChoice.textContent = panierShop[i].productQuantity;
-          quantityChoice.style.margin = "auto";
-          quantityChoice.style.color = "black";
-          divQuantity.appendChild(quantityChoice);
-
-          let totalLine = productLine.insertCell(5);
-          totalLine.setAttribute("id", "totalLine");
-          totalLine.textContent = panierShop[i].totalProduct / 100 + " €";
-
-          //suppression d'un produit
-          buttonRemove.addEventListener("click", () => {
-            $("#cell" + i).remove();
-            alert("L'article à bien été supprimé");
-            panierShop.splice([i], 1);
-            localStorage.setItem("panier", JSON.stringify(panierShop));
-            console.log(panierShop);
-            window.location.reload();
-            cartInfo();
-          })
+          
+          cartDisplay(i, productInCart.imageUrl, productInCart.name, panierShop[i].colors, productInCart.price, panierShop[i].productQuantity, panierShop[i].totalProduct);
+          
         }
       }))
 }
+          
 for (let j = 0; j < panierShop.length; j++) {
   let total = panierShop[j].totalProduct;
   orderPrice += total;
