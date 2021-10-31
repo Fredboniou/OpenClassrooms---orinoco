@@ -1,8 +1,5 @@
 /* Création des variables */
 let divRow = document.getElementById("row");
-let divImage = document.getElementById("divImage");
-let divDescription = document.getElementById("divDescription");
-
 let panierShop = (localStorage.getItem("panier")) ? JSON.parse(localStorage.getItem("panier")) : [];
 
 /* obtention des paramètres URL */

@@ -1,8 +1,6 @@
 //création des variables
 let body = document.getElementById("body");
 let section = document.getElementById("info_panier");
-let tableOrder = document.getElementById("panier-recap");
-let totalCart = document.getElementById("totalCart");
 let orderPrice = null;
 let totalNumber = 0;
 let number = document.getElementById("number");
