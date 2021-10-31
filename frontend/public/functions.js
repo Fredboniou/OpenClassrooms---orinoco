@@ -207,3 +207,14 @@ function verifCity(event) {
     }
 }
 
+/**********************FONCTION D'AFFICHAGE PAGE DE CONFIRMATION***************************/
+// let textConfirm = document.getElementById("textConfirm");
+function confirmOrder(price, orderId) {
+  textConfirm.innerHTML = 
+    `
+    <p style="font-size: 20px; color: black;">Merci pour votre commande. Cette dernière a bien été prise en compte.</p>
+    <p style="font-size: 20px; color: black;">Le total de votre commande s'élève à : ${price / 100} €.</p>
+    <p style="font-size: 20px; color: black;">Votre numéro de commande est le suivant : ${orderId}</p>
+    <input type="button" value="Retour à la page d'accueil" id="home" />
+    `
+}
